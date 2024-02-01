@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import closeImg from '../Pages/Images/closebtn.png'
+import { AiOutlineLoading } from "react-icons/ai";
 
-const IdentifyImage = ({close, openResult, setPlantData, setImagePath}) => {
+const IdentifyImage = ({close, openResult, setPlantData}) => {
 
 	const [image, setImage] = useState("");
 	const [isLoading, setIsLoading] = useState(false)
@@ -55,7 +56,7 @@ const IdentifyImage = ({close, openResult, setPlantData, setImagePath}) => {
 				<div className='w-[100%] h-[550px] rounded-b-[10px] flex justify-center items-center'>
 
 
-					{isLoading ? <div><h1>HHHHHHHHHH</h1></div> :
+					{isLoading ? <div className={`animate-spin text-9xl`}><AiOutlineLoading /></div> :
 						<div className="w-[600px] h-[400px] bg-[#e2fef0] border-dashed border-[3px] border-[#0f824b]">
 							<div className="w-[100%] h-[100%] flex justify-center items-center ">
 								<input className='hidden' type="file" accept="image/*" id="upload"

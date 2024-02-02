@@ -1,30 +1,45 @@
 import React, {useState} from 'react'
-import IdentifyImage from '../Components/IdentifyImage'
-import ViewResult from "../Components/ViewResult";
+import {IoIosArrowDown} from "react-icons/io";
+import { IoSearchSharp } from "react-icons/io5";
+import { BsThreeDots } from "react-icons/bs";
 
 const Home = () => {
-	const [identifierVisible, setIdentifierVisible] = useState(false)
-	const [resultVisible, setResultVisible] = useState(false)
-	const [plantData, setPlantData] = useState("")
-	const openIdentify = () => {
-		identifierVisible ? setIdentifierVisible(false) : setIdentifierVisible(true);
-	}
+	const [part, setPart] = useState("Roots")
+	const [state, setState] = useState("Fresh")
 
-	const openResult = () => {
-		resultVisible ? setResultVisible(false) : setResultVisible(true);
-	}
-	console.log('Home', plantData)
 
 	return (
-		<div className="w-[100vw] h-[100vh] bg-cover bg-[url('/src/Pages/Images/Herbnet_home_page.jpg')]">
-			<button className={`w-[136px] h-[32px] bg-[#fff] mt-[31px] rounded-[5px] ml-[849px] text-[14px] font-semibold hover:bg-[#17c270] text-[#000]
-        hover:text-[#fff]`} onClick={openIdentify}>Identify Your Plant
-			</button>
-			{identifierVisible ?
-				<div><IdentifyImage close={openIdentify} openResult={openResult} setPlantData={setPlantData}/></div> : <></>}
-			{resultVisible ?
-				<div><ViewResult close={openResult} plantData={plantData}/>
-				</div> : <></>}
+		<div className={`flex justify-around items-center h-[85vh]`}>
+			<div className={`flex flex-col gap-10`}>
+				<h1 className={`text-white text-6xl font-bold text-center w-[60vw]`}>
+					Your Marketplace for Buying & Selling Quality Herbal Tree Parts!
+				</h1>
+				<div className={`bg-white h-20 flex justify-between	 items-center mx-12 p-1 rounded-[13px]`}>
+					<input className={`pl-4 h-full w-[35vw] text-4xl font-medium text-[#7b7b7b] placeholder:text-[#7b7b7b]`} type={"text"} placeholder={"Search for Products"}/>
+					<div className={`flex gap-1 h-full`}>
+						<div
+							className={`h-full text-3xl text-[#7b7b7b] font-medium bg-gray-200 rounded-[8px] flex justify-around items-center gap-1 px-2`}>
+							<h1>Roots</h1>
+							<IoIosArrowDown/>
+						</div>
+						<div
+							className={`h-full text-3xl text-[#7b7b7b] font-medium bg-gray-200 rounded-[8px] flex justify-around items-center gap-1 px-2`}>
+							<h1>Fresh</h1>
+							<IoIosArrowDown/>
+						</div>
+						<div
+							className={`h-full text-5xl text-[#7b7b7b] bg-gray-200 rounded-[8px] flex justify-around items-center px-4`}>
+							<IoSearchSharp/>
+						</div>
+					</div>
+				</div>
+				<div className={`flex justify-center`}>
+					<h1 className={`text-[27px] text-gray-400 font-semibold flex items-center`}>Popular:
+						<span className={`text-white ml-2`}>Ginseng Roots, Eucalyptus Leaves, Lavender Buds, Moringa Seeds</span>
+						<BsThreeDots className={`text-4xl text-white bg-white bg-opacity-40 rounded-full ml-2`}/>
+					</h1>
+				</div>
+			</div>
 		</div>
 	)
 }

@@ -9,11 +9,10 @@ import {SignUp} from "./Components/SignUp";
 function App() {
 	return (
 		<>
-			{/*<SignUp/>*/}
 			<AuthProvider>
 				<Navbar/>
+				<Home/>
 			</AuthProvider>
-			{/*<Home/>*/}
 		</>
 	);
 }

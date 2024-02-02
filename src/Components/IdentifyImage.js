@@ -42,8 +42,7 @@ const IdentifyImage = ({close, openResult, setPlantData}) => {
 
 
 	return (
-		<div
-			className={`w-[100vw] h-[100vh] flex justify-center items-center absolute top-0 bg-[#00000080]`}>
+		<div className={`w-[100vw] h-[100vh] flex justify-center items-center absolute top-0 bg-[#00000080]`}>
 			<div className={`w-[800px] h-[600px] bg-[#fff] rounded-[10px]`}>
 				<div className='w-full h-[50px] bg-[#0f824b] rounded-t-[10px] flex items-center'>
 					<h1 className='w-[calc(100%-50px)] text-[25px] text-[#fff] flex items-center justify-center font-bold h-[50px]'>Plant

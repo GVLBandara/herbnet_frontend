@@ -10,11 +10,11 @@ import profilePic from "../Pages/Images/img.png"
 import {IoIosArrowDown} from "react-icons/io";
 
 function Navbar() {
-	const {getUser, userIsAuthenticated, userLogout} = useAuth()
+	const {userIsAuthenticated, userLogout} = useAuth()
 	const [identifierVisible, setIdentifierVisible] = useState(false)
 	const [resultVisible, setResultVisible] = useState(false)
-	const [loginVisible, setLoginVisible] = useState(false)
-	const [singupVisible, setSingupVisible] = useState(false)
+	const [logInVisible, setLogInVisible] = useState(false)
+	const [singUpVisible, setSingUpVisible] = useState(false)
 	const [plantData, setPlantData] = useState("")
 	const [drop, setDrop] = useState("")
 
@@ -30,42 +30,24 @@ function Navbar() {
 	}
 
 	const openLogin = () => {
-		setSingupVisible(false)
-		setLoginVisible(!loginVisible)
+		setSingUpVisible(false)
+		setLogInVisible(!logInVisible)
 	}
 
 	const openSignup = () => {
-		setLoginVisible(false)
-		setSingupVisible(!singupVisible);
+		setLogInVisible(false)
+		setSingUpVisible(!singUpVisible);
 	}
 
 	const logout = () => {
 		userLogout()
 	}
 
-	const enterMenuStyle = () => {
-		return userIsAuthenticated() ? {"display": "none"} : {"display": "block"}
-	}
-
-	const logoutMenuStyle = () => {
-		return userIsAuthenticated() ? {"display": "block"} : {"display": "none"}
-	}
-
-	const userPageStyle = () => {
-		const user = getUser()
-		return user && user.role === 'USER' ? {"display": "block"} : {"display": "none"}
-	}
-
-	const getUserName = () => {
-		const user = getUser()
-		return user ? user.name : ''
-	}
-
 	return (
-		<div>
+		<div className={`relative z-10`}>
 			<div className={`h-[120px] bg-black bg-opacity-25 px-12 py-16 flex justify-between`}>
 				<div className={`flex gap-3 items-center`}>
-					<img className={`w-16 rounded-2xl`} src={logo}/>
+					<img className={`w-16 rounded-2xl`} src={logo} alt={"Logo"}/>
 					<p className={`text-white text-[26px] font-bold`}>Herbnet</p>
 				</div>
 				<div className={`flex gap-4 items-center`}>
@@ -86,7 +68,7 @@ function Navbar() {
 							>Chat
 							</button>
 							<GoBell className={`text-3xl text-white mx-4`}/>
-							<img className={`rounded-full w-14`} src={profilePic}/>
+							<img className={`rounded-full w-14`} src={profilePic} alt={"Profile Pic"}/>
 							<IoIosArrowDown className={`text-3xl text-white cursor-pointer transition-all duration-500 ${(drop)?"rotate-180":"rotate-0"}`} onClick={openDrop}/>
 						</div> : <div className={`flex gap-4`}>
 							<button
@@ -105,11 +87,11 @@ function Navbar() {
 				<div><ViewResult close={openResult} plantData={plantData}/>
 				</div> : <></>
 			}
-			{loginVisible ?
+			{logInVisible ?
 				<div><Login close={openLogin} signup={openSignup}/>
 				</div> : <></>
 			}
-			{singupVisible ?
+			{singUpVisible ?
 				<div><SignUp close={openSignup} login={openLogin}/>
 				</div> : <></>
 			}

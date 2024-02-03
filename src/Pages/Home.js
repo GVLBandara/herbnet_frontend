@@ -25,7 +25,7 @@ const Home = () => {
 	}
 
 	return (
-		<div className={`flex justify-around items-center h-[85vh]`}>
+		<div className={`flex justify-around items-center h-[85vh] relative z-0`}>
 			<div className={`flex flex-col gap-10`}>
 				<h1 className={`text-white text-6xl font-bold text-center w-[60vw]`}>
 					Your Marketplace for Buying & Selling Quality Herbal Tree Parts!

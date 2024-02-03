@@ -5,13 +5,15 @@ import Login from "./Components/Login";
 import {AuthProvider} from "./Components/AuthContext";
 import Navbar from "./Components/Navbar";
 import {SignUp} from "./Components/SignUp";
+import {SellProduct} from "./Pages/SellProduct";
 
 function App() {
 	return (
 		<>
 			<AuthProvider>
 				<Navbar/>
-				<Home/>
+				<SellProduct/>
+				{/*<Home/>*/}
 			</AuthProvider>
 		</>
 	);

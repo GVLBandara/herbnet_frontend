@@ -18,6 +18,10 @@ function Navbar() {
 	const [plantData, setPlantData] = useState("")
 	const [drop, setDrop] = useState("")
 
+	const styleHome = `h-[120px] bg-black bg-opacity-25 px-12 py-16 flex justify-between`;
+	const styleNotHome = `bg-[#014621] px-12 py-[17px] flex justify-between`
+	const isHome = false;
+
 	const openDrop = () => {
 		setDrop(!drop);
 	}
@@ -45,7 +49,7 @@ function Navbar() {
 
 	return (
 		<div className={`relative z-10`}>
-			<div className={`h-[120px] bg-black bg-opacity-25 px-12 py-16 flex justify-between`}>
+			<div className={isHome?styleHome:styleNotHome}>
 				<div className={`flex gap-3 items-center`}>
 					<img className={`w-16 rounded-2xl`} src={logo} alt={"Logo"}/>
 					<p className={`text-white text-[26px] font-bold`}>Herbnet</p>

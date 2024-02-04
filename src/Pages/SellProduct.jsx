@@ -1,9 +1,11 @@
 import {useState} from "react";
+import {useAuth} from "../Components/AuthContext";
 
 export function SellProduct() {
+	const auth = useAuth();
 	const [formData, setFormData] = useState({
 		plantName: '',
-		productDescription: '',
+		description: '',
 		additionalInformation: '',
 		price: '',
 		harvestDate: '',
@@ -19,7 +21,26 @@ export function SellProduct() {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		// Add your logic for form submission here
+
+		if (formData.plantName && formData.harvestDate) {
+
+			fetch('http://localhost:8080/product', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': `Basic ${auth.getUser().authdata}`
+				},
+				body: JSON.stringify(formData),
+			})
+				.then(response => {
+					console.log('Response status:', response.status);
+				})
+				.catch(error => {
+					console.error('Error :', error);
+				});
+		} else {
+			alert("Insert plant name and harvest date");
+		}
 		console.log('Form submitted:', formData);
 	};
 
@@ -197,14 +218,26 @@ export function SellProduct() {
 										name="plantName"
 										value={formData.plantName}
 										onChange={handleChange}
+										list="plantNamesList"
 									/>
+									<datalist id="plantNamesList">
+										<option value="Candle Bush"/>
+										<option value="Long Pepper"/>
+										<option value="Sweet Flag"/>
+										<option value="Light blue snakeweed"/>
+										<option value="Ming aralia"/>
+										<option value="Skunk vine"/>
+										<option value="Balloon vine"/>
+										<option value="Grey Nicker"/>
+										<option value="Malabar nut"/>
+									</datalist>
 								</div>
 								<div>
 									<label htmlFor="productDescription">Product Description:</label>
 									<textarea
-										id="productDescription"
-										name="productDescription"
-										value={formData.productDescription}
+										id="description"
+										name="description"
+										value={formData.description}
 										onChange={handleChange}
 									/>
 								</div>
@@ -225,11 +258,16 @@ export function SellProduct() {
 										name="price"
 										value={formData.price}
 										onChange={handleChange}
+										pattern="^\d+(\.\d{1,2})?$"
+										title="Enter a valid price (e.g., 10 or 10.50)"
 									/>
 								</div>
 								<div>
 									<label htmlFor="qualityAvailable">Quality Available:</label>
-									<input type="text"/>
+									<input
+										type="text"
+										pattern="^\d+(\.\d{1})?$"
+										title="Enter a valid number"/>
 								</div>
 								<div>
 									<label htmlFor="origin">Origin:</label>

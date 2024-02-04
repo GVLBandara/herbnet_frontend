@@ -20,13 +20,13 @@ export function SellProduct() {
 		setFormData({...formData, [name]: value});
 	};
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
 
 		if (formData.plantName && formData.harvestDate) {
 
 			try {
-				const response = API.addProduct(auth.getUser(), formData);
+				const response = await API.addProduct(auth.getUser(), formData);
 				console.log(response.status);
 			}catch (error){
 				console.log(error);

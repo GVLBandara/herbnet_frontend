@@ -2,7 +2,7 @@ import {ProductCard} from "../Components/ProductCard";
 import React, {useState} from "react";
 import {IoIosArrowDown} from "react-icons/io";
 
-export function SearchResult() {
+export function SearchResult({prodList}) {
 	const [formData, setFormData] = useState({
 		plantOrgan: '',
 		processingMethod: '',
@@ -266,14 +266,7 @@ export function SearchResult() {
 					</div>
 				</div>
 				<div className={`flex justify-between`} style={{width: "80vw", flexWrap: "wrap", gap: "20px"}}>
-					<ProductCard data={data}/>
-					<ProductCard data={data}/>
-					<ProductCard data={data}/>
-					<ProductCard data={data}/>
-					<ProductCard data={data}/>
-					<ProductCard data={data}/>
-					<ProductCard data={data}/>
-					<ProductCard data={data}/>
+					{prodList.map(product => <ProductCard key={product.productId} data={product}/>)}
 				</div>
 			</div>
 		</div>

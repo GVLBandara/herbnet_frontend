@@ -4,12 +4,14 @@ export function ProductCard({data}) {
 		return Math.floor(Math.random() * (max - min) + min);
 	}
 
+	const plantName = 'Balloon vine'
+
 	return (
 		<div className={`bg-white rounded-[10px]`} style={{width: "18vw"}}>
 			<div className={`relative flex justify-end rounded-[10px] p-2`}
 				style={{
 					height: '18vw',
-					backgroundImage: `url('/ProductImages/${data.plantName}${getRandomInt(0,2)}.jpg')`,
+					backgroundImage: `url('/ProductImages/${plantName}${getRandomInt(0,2)}.jpg')`,
 					backgroundSize: 'cover',
 					backgroundPosition: 'center',
 					backgroundRepeat: 'no-repeat'

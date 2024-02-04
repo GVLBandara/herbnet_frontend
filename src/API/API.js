@@ -3,7 +3,7 @@ import axios from 'axios'
 export const API = {
 	authenticate,
 	signup,
-	getUsers,
+	getUsers: search,
 	addProduct
 }
 
@@ -19,15 +19,15 @@ function signup(user) {
 	})
 }
 
-function getUsers(user, username) {
-	const url = username ? `/api/users/${username}` : '/api/users'
+function search(key) {
+	const url =`/product/search`
 	return instance.get(url, {
-		headers: { 'Authorization': basicAuth(user) }
+		headers: { 'Content-type': 'application/json' }
 	})
 }
 
-function addProduct(user, book) {
-	return instance.post('/product', book, {
+function addProduct(user, product) {
+	return instance.post('/product', product, {
 		headers: {
 			'Content-type': 'application/json',
 			'Authorization': basicAuth(user)

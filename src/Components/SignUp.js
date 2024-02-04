@@ -1,10 +1,9 @@
 import React, {useState} from "react";
 import {useAuth} from "./AuthContext";
 import closeImg from "../Pages/Images/closebtn.png";
+import {API} from "../API/API";
 
 export function SignUp({close, login}) {
-	const Auth = useAuth()
-
 	const [username, setUsername] = useState('')
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState('')
@@ -22,23 +21,16 @@ export function SignUp({close, login}) {
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 
-		if (username && email && password) {
-
-			fetch('http://localhost:8080/auth/signup', {
-				method: 'POST',
-				headers: {'Content-Type': 'application/json'},
-				body: JSON.stringify({username, password, email}),
-			})
-				.then(response => response.json())
-				.then(data => {
-					console.log(data)
-					login();
-				})
-				.catch(error => {
-					console.error('Error :', error);
-				});
-		} else {
+		if (!(username && email && password)) {
 			alert("Insert Username and Password");
+		} else {
+			try {
+				const response = await API.signup({username, password, email});
+				console.log(response.status)
+				login();
+			} catch (error) {
+				console.error('Error :', error);
+			}
 		}
 	}
 
@@ -87,7 +79,8 @@ export function SignUp({close, login}) {
 							/>
 						</div>
 						<button className={`bg-blue-400`} type="submit">SignUp</button>
-						<p>Already member? <span className={`hover: text-blue-600 cursor-pointer`} onClick={login}>LogIn</span> here!</p>
+						<p>Already member? <span className={`hover: text-blue-600 cursor-pointer`}
+												 onClick={login}>LogIn</span> here!</p>
 					</div>
 				</form>
 			</div>

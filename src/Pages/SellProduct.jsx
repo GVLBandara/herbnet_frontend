@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {useAuth} from "../Components/AuthContext";
+import {API} from "../API/API";
 
 export function SellProduct() {
 	const auth = useAuth();
@@ -24,20 +25,12 @@ export function SellProduct() {
 
 		if (formData.plantName && formData.harvestDate) {
 
-			fetch('http://localhost:8080/product', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': `Basic ${auth.getUser().authdata}`
-				},
-				body: JSON.stringify(formData),
-			})
-				.then(response => {
-					console.log('Response status:', response.status);
-				})
-				.catch(error => {
-					console.error('Error :', error);
-				});
+			try {
+				const response = API.addProduct(auth.getUser(), formData);
+				console.log(response.status);
+			}catch (error){
+				console.log(error);
+			}
 		} else {
 			alert("Insert plant name and harvest date");
 		}

@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {useAuth} from "./AuthContext";
 import closeImg from "../Pages/Images/closebtn.png";
+import {API} from "../API/API";
 
 function Login({close, signup}) {
 	const Auth = useAuth()
@@ -16,31 +17,22 @@ function Login({close, signup}) {
 		}
 	}
 
-	const login = data => {
-		const {name, role} = data
-		const authdata = window.btoa(username + ':' + password)
-		const authenticatedUser = {name, role, authdata}
-		Auth.userLogin(authenticatedUser)
-		close();
-	}
-
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 
 		if (username && password) {
 
-			fetch('http://localhost:8080/auth/authenticate', {
-				method: 'POST',
-				headers: {'Content-Type': 'application/json'},
-				body: JSON.stringify({username, password}),
-			})
-				.then(response => response.json())
-				.then(data => {
-					login(data)
-				})
-				.catch(error => {
-					console.error('Error :', error);
-				});
+			try {
+				const response = await API.authenticate(username, password)
+				const { name, role } = response.data
+				const authData = window.btoa(username + ':' + password)
+				const authenticatedUser = { name, role, authData: authData }
+
+				Auth.userLogin(authenticatedUser);
+				close();
+			} catch (error) {
+				console.error('Error :', error);
+			}
 		} else {
 			alert("Insert Username and Password");
 		}

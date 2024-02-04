@@ -6,13 +6,16 @@ import {AuthProvider} from "./Components/AuthContext";
 import Navbar from "./Components/Navbar";
 import {SignUp} from "./Components/SignUp";
 import {SellProduct} from "./Pages/SellProduct";
+import {ProductCard} from "./Components/ProductCard";
+import {SearchResult} from "./Pages/SearchResult";
 
 function App() {
 	return (
 		<>
 			<AuthProvider>
 				<Navbar/>
-				<SellProduct/>
+				<SearchResult/>
+				{/*<SellProduct/>*/}
 				{/*<Home/>*/}
 			</AuthProvider>
 		</>

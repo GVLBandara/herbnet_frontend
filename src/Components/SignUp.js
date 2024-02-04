@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import {useAuth} from "./AuthContext";
 import closeImg from "../Pages/Images/closebtn.png";
 import {API} from "../API/API";
 

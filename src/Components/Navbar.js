@@ -10,7 +10,7 @@ import profilePic from "../Pages/Images/img.png"
 import {IoIosArrowDown} from "react-icons/io";
 import {IoSearchSharp} from "react-icons/io5";
 
-function Navbar({handleChange, handleSearch}) {
+function Navbar({handleChange, handleSearch, searchKey}) {
 	const {userIsAuthenticated, userLogout} = useAuth()
 	const [identifierVisible, setIdentifierVisible] = useState(false)
 	const [resultVisible, setResultVisible] = useState(false)
@@ -55,11 +55,12 @@ function Navbar({handleChange, handleSearch}) {
 					<img className={`w-16 rounded-2xl`} src={logo} alt={"Logo"}/>
 					<p className={`text-white text-[26px] font-bold`}>Herbnet</p>
 				</div>
-				<div className={`bg-white h-11 w-full flex justify-between items-center mx-12 rounded-[10px]`}>
+				{!isHome? <div className={`bg-white h-11 w-full flex justify-between items-center mx-12 rounded-[10px]`}>
 					<input
 						className={`pl-4 h-full w-full rounded-[10px] font-medium text-[#7b7b7b] focus:outline-none placeholder:text-[#7b7b7b]`}
 						type={"text"} placeholder={"Search for Products"}
 						name="key"
+						value={searchKey.key}
 						onChange={handleChange}
 						onKeyDown={event => {
 							if (event.key === 'Enter') handleSearch()
@@ -73,6 +74,7 @@ function Navbar({handleChange, handleSearch}) {
 								<select
 									className={`bg-gray-200 appearance-none pl-1 pr-4 focus:outline-none`}
 									name="part"
+									value={searchKey.part}
 									onChange={handleChange}>
 									<option value="">All Parts</option>
 									<option value="Roots">Roots</option>
@@ -92,6 +94,7 @@ function Navbar({handleChange, handleSearch}) {
 								<select
 									className={`bg-gray-200 appearance-none pl-1 pr-4 focus:outline-none`}
 									name="state"
+									value={searchKey.state}
 									onChange={handleChange}>
 									<option value="">All States</option>
 									<option value="Fresh">Fresh</option>
@@ -112,7 +115,7 @@ function Navbar({handleChange, handleSearch}) {
 						</div>
 
 					</div>
-				</div>
+				</div>:<></>}
 				<div className={`flex gap-4 items-center`}>
 					<div>
 						<button

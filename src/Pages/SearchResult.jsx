@@ -2,20 +2,22 @@ import {ProductCard} from "../Components/ProductCard";
 import React, {useState} from "react";
 import {IoIosArrowDown} from "react-icons/io";
 
-export function SearchResult({prodList}) {
+export function SearchResult({prodList, searchKey}) {
 	const [formData, setFormData] = useState({
 		plantOrgan: '',
 		processingMethod: '',
 		location: ''
 	});
 
-	const searchKey = 'Moringa Seeds'
-
 	const data = {
 		productId: 1,
 		plantName: "Balloon vine",
 		description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis earum laboriosam necessitatibus rem tempore voluptatibus!",
 		price: "175.00"
+	}
+
+	const capitalizeWords = (str) => {
+		return str.replace(/\b\w/g, match => match.toUpperCase());
 	}
 
 	const handleChange = (event) => {
@@ -250,7 +252,7 @@ export function SearchResult({prodList}) {
 			<div>
 				<div className={`flex justify-between items-center px-5`}>
 					<div className={`py-5`}>
-						<p className={`text-5xl`}>Showing Results for <span>{searchKey}</span></p>
+						<p className={`text-5xl text-gray-500`}>Showing Results for <span className={`text-black`}>{capitalizeWords(searchKey)}</span></p>
 						<p className={`text-3xl`}>154 Results</p>
 					</div>
 					<div>
@@ -264,7 +266,7 @@ export function SearchResult({prodList}) {
 						</div>
 					</div>
 				</div>
-				<div className={`flex flex-wrap justify-around gap-10 w-[85vw] px-5`}>
+				<div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7 w-[85vw] px-5`}>
 					{prodList.map(product => <ProductCard key={product.productId} data={product}/>)}
 				</div>
 			</div>

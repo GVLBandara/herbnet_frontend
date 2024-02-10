@@ -12,6 +12,7 @@ function App() {
 		part: '',
 		state: ''
 	})
+	const [key, setKey] = useState("")
 	const [visible, setVisible] = useState(true)
 	const [prodList, setProdList] = useState("")
 
@@ -21,12 +22,11 @@ function App() {
 	};
 
 	const handleSearch = async (e) => {
-		e.preventDefault();
-
 		if (searchKey.key || searchKey.part || searchKey.state) {
 			try {
 				const response = await API.getUsers(searchKey);
 				setProdList(response.data)
+				setKey(searchKey.key);
 				setVisible(false)
 			} catch (error) {
 				console.log(error)
@@ -37,10 +37,10 @@ function App() {
 	return (
 		<>
 			<AuthProvider>
-				<Navbar handleChange={handleChange} handleSearch={handleSearch}/>
+				<Navbar handleChange={handleChange} handleSearch={handleSearch} searchKey={searchKey}/>
 				{visible?
 					<Home handleChange={handleChange} handleSearch={handleSearch}/> :
-					<SearchResult prodList={prodList}/>}
+					<SearchResult prodList={prodList} searchKey={key}/>}
 			</AuthProvider>
 		</>
 	);

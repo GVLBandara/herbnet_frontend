@@ -24,8 +24,8 @@ export function SearchResult({prodList}) {
 	};
 
 	return (
-		<div className={`bg-white flex justify-around`}>
-			<div className={`bg-amber-300`} style={{"width": "16vw"}}>
+		<div className={`bg-white flex justify-between`}>
+			<div className={`bg-gray-100 w-[15vw]`}>
 				<div>
 					<h2>Plant Organ:</h2>
 					<div>
@@ -248,24 +248,23 @@ export function SearchResult({prodList}) {
 				</div>
 			</div>
 			<div>
-				<div className={`flex justify-between items-center`}>
-					<div className={`p-3`} style={{padding: "15px"}}>
+				<div className={`flex justify-between items-center px-5`}>
+					<div className={`py-5`}>
 						<p className={`text-5xl`}>Showing Results for <span>{searchKey}</span></p>
 						<p className={`text-3xl`}>154 Results</p>
 					</div>
 					<div>
-						<div className={`text-2xl text-[#7b7b7b] font-medium bg-gray-200 rounded-[8px] flex justify-around items-center gap-1 px-2 relative`}
-						style={{height: "55px"}}>
+						<div className={`text-2xl text-[#7b7b7b] font-medium bg-gray-200 rounded-[8px] flex justify-around items-center gap-1 px-2 relative h-[55px]`}>
 							<p className={`bg-gray-200 appearance-none pl-1 pr-8 focus:outline-none`}>
 								Sort: Best Match
 							</p>
-							<div className={`absolute inset-y-0 right-0 flex justify-center items-center pointer-events-none`}>
+							<div className={`absolute inset-y-0 right-0 flex items-center pointer-events-none px-2`}>
 								<IoIosArrowDown className={`fill-current text-2xl text-gray-500`}/>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div className={`flex justify-between`} style={{width: "80vw", flexWrap: "wrap", gap: "20px"}}>
+				<div className={`flex flex-wrap justify-around gap-10 w-[85vw] px-5`}>
 					{prodList.map(product => <ProductCard key={product.productId} data={product}/>)}
 				</div>
 			</div>

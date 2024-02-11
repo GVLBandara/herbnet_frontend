@@ -9,6 +9,7 @@ import {GoBell} from "react-icons/go";
 import profilePic from "../Pages/Images/img.png"
 import {IoIosArrowDown} from "react-icons/io";
 import {IoSearchSharp} from "react-icons/io5";
+import {useLocation, useNavigate} from "react-router-dom";
 
 function Navbar({handleChange, handleSearch, searchKey}) {
 	const {userIsAuthenticated, userLogout} = useAuth()
@@ -18,11 +19,13 @@ function Navbar({handleChange, handleSearch, searchKey}) {
 	const [singUpVisible, setSingUpVisible] = useState(false)
 	const [plantData, setPlantData] = useState("")
 	const [drop, setDrop] = useState(false)
+	const navigate = useNavigate()
+	const location = useLocation();
 
 	const styleHome = `h-[120px] bg-black bg-opacity-25 px-12 py-16 flex justify-between items-center`;
 	const styleNotHome = `bg-[#014621] px-12 py-[17px] flex justify-between items-center`
-	const isHome = false;
 
+	const isHome = (location.pathname==='/');
 	const openDrop = () => {
 		setDrop(!drop);
 	}
@@ -51,7 +54,7 @@ function Navbar({handleChange, handleSearch, searchKey}) {
 	return (
 		<div className={`relative z-10`}>
 			<div className={isHome ? styleHome : styleNotHome}>
-				<div className={`flex gap-3 items-center mr-16`}>
+				<div className={`flex gap-3 items-center mr-16 cursor-pointer`} onClick={()=>{navigate('/')}}>
 					<img className={`w-16 rounded-2xl`} src={logo} alt={"Logo"}/>
 					<p className={`text-white text-[26px] font-bold`}>Herbnet</p>
 				</div>

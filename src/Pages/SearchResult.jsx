@@ -26,7 +26,7 @@ export function SearchResult({prodList, searchKey}) {
 	};
 
 	return (
-		<div className={`bg-white flex justify-between`}>
+		<div className={`bg-white flex justify-between h-[calc(100vh-98px)]`}>
 			<div className={`bg-gray-100 w-[15vw]`}>
 				<div>
 					<h2>Plant Organ:</h2>
@@ -266,7 +266,7 @@ export function SearchResult({prodList, searchKey}) {
 						</div>
 					</div>
 				</div>
-				<div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7 w-[85vw] px-5`}>
+				<div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7 w-[85vw] h-[calc(100vh-222px)] px-5 overflow-scroll overflow-x-hidden`}>
 					{prodList.map(product => <ProductCard key={product.productId} data={product}/>)}
 				</div>
 			</div>

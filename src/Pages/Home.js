@@ -2,8 +2,17 @@ import React from 'react'
 import {IoIosArrowDown} from "react-icons/io";
 import {IoSearchSharp} from "react-icons/io5";
 import {BsThreeDots} from "react-icons/bs";
+import {useNavigate} from "react-router-dom";
 
-const Home = ({handleChange, handleSearch}) => {
+const Home = ({handleChange, searchKey, search}) => {
+	const navigate = useNavigate();
+
+	const handleSearch = () => {
+		if (searchKey.key || searchKey.part || searchKey.state) {
+			search();
+			navigate('/search')
+		}
+	}
 
 	return (
 		<div className={`flex justify-around items-center h-[85vh] relative z-0`}>

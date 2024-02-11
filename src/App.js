@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import './App.css';
 import {AuthProvider} from "./Components/AuthContext";
 import Navbar from "./Components/Navbar";
@@ -13,21 +14,19 @@ function App() {
 		state: ''
 	})
 	const [key, setKey] = useState("")
-	const [visible, setVisible] = useState(true)
-	const [prodList, setProdList] = useState("")
+	const [prodList, setProdList] = useState([])
 
 	const handleChange = (event) => {
 		const {name, value} = event.target;
 		setSearchKey({...searchKey, [name]: value});
 	};
 
-	const handleSearch = async (e) => {
+	const search = async (e) => {
 		if (searchKey.key || searchKey.part || searchKey.state) {
 			try {
-				const response = await API.getUsers(searchKey);
-				setProdList(response.data)
 				setKey(searchKey.key);
-				setVisible(false)
+				const response = await API.search(searchKey);
+				setProdList(response.data)
 			} catch (error) {
 				console.log(error)
 			}
@@ -37,10 +36,13 @@ function App() {
 	return (
 		<>
 			<AuthProvider>
-				<Navbar handleChange={handleChange} handleSearch={handleSearch} searchKey={searchKey}/>
-				{visible?
-					<Home handleChange={handleChange} handleSearch={handleSearch}/> :
-					<SearchResult prodList={prodList} searchKey={key}/>}
+				<Router>
+					<Navbar handleChange={handleChange} handleSearch={search} searchKey={searchKey}/>
+					<Routes>
+						<Route path='/' element={<Home handleChange={handleChange} searchKey={searchKey} search={search} />} />
+						<Route path='/search' element={<SearchResult prodList={prodList} searchKey={key} />} />
+					</Routes>
+				</Router>
 			</AuthProvider>
 		</>
 	);

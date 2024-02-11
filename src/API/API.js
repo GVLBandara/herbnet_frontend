@@ -3,7 +3,7 @@ import axios from 'axios'
 export const API = {
 	authenticate,
 	signup,
-	getUsers: search,
+	search,
 	addProduct
 }
 

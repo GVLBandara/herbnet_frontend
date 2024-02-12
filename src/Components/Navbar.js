@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {useAuth} from "./AuthContext";
 import IdentifyImage from "./IdentifyImage";
 import ViewResult from "./ViewResult";
@@ -11,7 +11,7 @@ import {IoIosArrowDown} from "react-icons/io";
 import {IoSearchSharp} from "react-icons/io5";
 import {useLocation, useNavigate} from "react-router-dom";
 
-function Navbar({handleChange, handleSearch, searchKey}) {
+function Navbar() {
 	const {userIsAuthenticated, userLogout} = useAuth()
 	const [identifierVisible, setIdentifierVisible] = useState(false)
 	const [resultVisible, setResultVisible] = useState(false)
@@ -21,9 +21,36 @@ function Navbar({handleChange, handleSearch, searchKey}) {
 	const [drop, setDrop] = useState(false)
 	const navigate = useNavigate()
 	const location = useLocation();
+	const [searchKey, setSearchKey] = useState({
+		key: '',
+		part: '*',
+		state: '*'
+	})
+
+	useEffect(() => {
+		let params = location.pathname.split('/');
+		if(params[1]==='search'){
+			setSearchKey({
+				key: params[2].split('%20').join(' '),
+				part: params[3],
+				state: params[4]
+			})
+		}
+	}, [location.pathname]);
 
 	const styleHome = `h-[120px] bg-black bg-opacity-25 px-12 py-16 flex justify-between items-center`;
 	const styleNotHome = `bg-[#043a20] px-12 py-[17px] flex justify-between items-center`
+
+	const handleChange = (event) => {
+		const {name, value} = event.target;
+		setSearchKey({...searchKey, [name]: value});
+	};
+
+	const handleSearch = () => {
+		if (searchKey.key) {
+			navigate(`/search/${searchKey.key}/${searchKey.part}/${searchKey.state}`)
+		}
+	}
 
 	const isHome = (location.pathname==='/');
 	const openDrop = () => {

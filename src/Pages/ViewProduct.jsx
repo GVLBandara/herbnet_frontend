@@ -38,6 +38,7 @@ export function ViewProduct() {
 			setProduct(response.data)
 			setProduct({
 				...response.data,
+				plantName: "Balloon vine",
 				description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam, sapiente.",
 				additionalInformation: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, assumenda at debitis delectus fuga impedit maiores minus nobis nulla obcaecati officiis placeat quas quo quos sint ut voluptatem voluptates! Beatae dignissimos dolor perferendis rem reprehenderit. Cum cumque et eum minus quibusdam repellat sequi vel voluptas voluptates. Adipisci consequatur doloru"
 			})
@@ -51,7 +52,10 @@ export function ViewProduct() {
 			<div className={`bg-white bg-opacity-50 h-[73vh] w-[95vw] rounded-3xl`}>
 				<div className={`h-full w-full flex justify-between gap-4 p-16`}>
 					<div
-						className={`aspect-square bg-cover bg-no-repeat bg-center bg-[url('../public/ProductImages/Balloon_vine0.jpg')]`}/>
+						className={`aspect-square bg-cover bg-no-repeat bg-center`}
+						style={{
+							backgroundImage: `url('/ProductImages/${product.plantName}1.jpg')`,
+						}}/>
 					<div className={`bg-white h-full w-full`}>
 						<p>Premium Turmeric Roots</p>
 						<p>scientificName: {product.species.scientificName}</p>

@@ -1,16 +1,25 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {IoIosArrowDown} from "react-icons/io";
 import {IoSearchSharp} from "react-icons/io5";
 import {BsThreeDots} from "react-icons/bs";
 import {useNavigate} from "react-router-dom";
 
-const Home = ({handleChange, searchKey, search}) => {
+const Home = () => {
 	const navigate = useNavigate();
+	const [searchKey, setSearchKey] = useState({
+		key: '',
+		part: '*',
+		state: '*'
+	})
+
+	const handleChange = (event) => {
+		const {name, value} = event.target;
+		setSearchKey({...searchKey, [name]: value});
+	};
 
 	const handleSearch = () => {
 		if (searchKey.key || searchKey.part || searchKey.state) {
-			search();
-			navigate('/search')
+			navigate(`/search/${searchKey.key}/${searchKey.part}/${searchKey.state}`)
 		}
 	}
 
@@ -39,8 +48,9 @@ const Home = ({handleChange, searchKey, search}) => {
 								<select
 									className={`bg-gray-200 appearance-none pl-1 pr-8 focus:outline-none`}
 									name="part"
+									value={searchKey.part}
 									onChange={handleChange}>
-									<option value="">All Parts</option>
+									<option value="*">All Parts</option>
 									<option value="Roots">Roots</option>
 									<option value="Leaves">Leaves</option>
 									<option value="Fruits">Fruits</option>
@@ -58,8 +68,9 @@ const Home = ({handleChange, searchKey, search}) => {
 								<select
 									className={`bg-gray-200 appearance-none pl-1 pr-8 focus:outline-none`}
 									name="state"
+									value={searchKey.state}
 									onChange={handleChange}>
-									<option value="">All States</option>
+									<option value="*">All States</option>
 									<option value="Fresh">Fresh</option>
 									<option value="Dried">Dried</option>
 									<option value="Juiced">Juiced</option>

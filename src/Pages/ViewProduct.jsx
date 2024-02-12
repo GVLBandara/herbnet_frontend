@@ -49,34 +49,97 @@ export function ViewProduct() {
 
 	return (
 		<div className={`w-full h-[calc(100vh-98px)] flex justify-center items-center`}>
-			<div className={`bg-white bg-opacity-50 h-[73vh] w-[95vw] rounded-3xl`}>
-				<div className={`h-full w-full flex justify-between gap-4 p-16`}>
+			<div className={`bg-white bg-opacity-50 h-[86vh] w-[95vw] rounded-[30px]`}>
+				<div className={`h-full w-full flex justify-between gap-4 p-16 rounded-[30px]`}>
 					<div
 						className={`aspect-square bg-cover bg-no-repeat bg-center`}
 						style={{
 							backgroundImage: `url('/ProductImages/${product.plantName}1.jpg')`,
 						}}/>
-					<div className={`bg-white h-full w-full`}>
-						<p>Premium Turmeric Roots</p>
-						<p>scientificName: {product.species.scientificName}</p>
-						<p>englishName: {product.species.englishName}</p>
-						<p>sinhalaName: {product.species.sinhalaName}</p>
-						<a className={`text-blue-600`} href={product.species.url}>Learn
-							more...</a>
-						<p>Part: {product.plantOrgan}</p>
-						<p>Possessing Method: {product.processingMethod}</p>
-						<p className={`bg-amber-200`}>Description: {product.description}</p>
-						<p className={`bg-gray-300`}>Additional Information: {product.additionalInformation}</p>
-						<p>Price: Rs.<span>{product.price} per pack</span></p>
-						<p>Quantity Available: 100 packs</p>
-						<p>Harvest Date: {product.harvestDate}</p>
-						<p>Origin: {product.location}</p>
-						<p>Listing Date: {product.listingDate}</p>
+					<div className={`bg-white h-full w-full pl-[20px] pr-[20px] pt-[15px]`}>
+						<b>
+							<p className={'text-[24px] mb-[15px]'}>Premium Turmeric Roots</p>
+						</b>
+						<span className={'text-[18px]'}>
+							<table className={'w-full'}>
+								<tbody>
+									<tr>
+										<td className={'w-[23%]'}><p><b>ScientificName</b></p></td>
+										<td><p>: {product.species.scientificName}</p></td>
+									</tr>
+
+									<tr>
+										<td className={'w-[23%]'}><p><b>EnglishName</b></p></td>
+										<td><p>: {product.species.englishName}</p></td>
+									</tr>
+
+									<tr>
+										<td className={'w-[23%]'}><p><b>sinhalaName</b></p>
+										</td>
+										<td><p>: {product.species.sinhalaName}</p></td>
+									</tr>
+									<tr>
+										<a className={`text-blue-600`} href={product.species.url}><u>Learn more...</u></a>
+									</tr>
+
+									<tr>
+										<td className={'w-[23%]'}><p><b>Part</b></p></td>
+										<td><p>: {product.plantOrgan}</p></td>
+									</tr>
+
+									<tr>
+										<td className={'w-[23%]'}><p><b>Possessing Method</b></p></td>
+										<td><p>: {product.processingMethod}</p></td>
+									</tr>
+
+									<tr>
+										<td className={'w-[23%]'}><p className={'mb-[15px]'}><b>Description</b></p></td>
+										<td><p>: {product.description}</p></td>
+									</tr>
+								</tbody>
+							</table>
+
+
+
+							<p className={'mb-[15px]'}><b>Additional Information:</b>
+								<br/>{product.additionalInformation}</p>
+						</span>
+						<span className={'text-[22px]'}><p className={'mb-[15px]'}>Price: <span
+							className={'text-[red]'}>Rs.{product.price}</span> per pack</p></span>
+						<span className={'text-[18px]'}>
+							<table className={'w-full'}>
+								<tbody>
+									<tr>
+										<td className={'w-[23%]'}><p>Quantity Available</p></td>
+										<td><p>: 100 packs</p></td>
+									</tr>
+
+									<tr>
+										<td className={'w-[23%]'}><p>Harvest Date</p></td>
+										<td><p>: {product.harvestDate}</p></td>
+									</tr>
+
+									<tr>
+										<td className={'w-[23%]'}><p>Origin</p></td>
+										<td><p>: {product.location}</p></td>
+									</tr>
+
+									<tr>
+										<td className={'w-[23%]'}><p>Listing Date</p></td>
+										<td><p>: {product.listingDate}</p></td>
+									</tr>
+
+									<tr>
+										<td className={'w-[23%]'}><p className={'mb-[20px]'}>Seller</p></td>
+										<td><p className={'mb-[20px]'}>: {product.userName}</p></td>
+									</tr>
+								</tbody>
+							</table>
+						</span>
 						<button
 							className={`h-[45px] bg-[#008f85] text-[#fff] text-4xl rounded-[10px] text-[18px] px-4`}>Contact
 							Seller
 						</button>
-						<p>Seller: {product.userName}</p>
 					</div>
 				</div>
 			</div>

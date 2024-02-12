@@ -35,6 +35,12 @@ function Navbar() {
 				part: params[3],
 				state: params[4]
 			})
+		}else {
+			setSearchKey({
+				key: '',
+				part: '*',
+				state: '*'
+			})
 		}
 	}, [location.pathname]);
 

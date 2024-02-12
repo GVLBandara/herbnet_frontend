@@ -23,7 +23,7 @@ function Navbar({handleChange, handleSearch, searchKey}) {
 	const location = useLocation();
 
 	const styleHome = `h-[120px] bg-black bg-opacity-25 px-12 py-16 flex justify-between items-center`;
-	const styleNotHome = `bg-[#014621] px-12 py-[17px] flex justify-between items-center`
+	const styleNotHome = `bg-[#043a20] px-12 py-[17px] flex justify-between items-center`
 
 	const isHome = (location.pathname==='/');
 	const openDrop = () => {

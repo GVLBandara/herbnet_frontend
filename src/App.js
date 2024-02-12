@@ -6,6 +6,7 @@ import Navbar from "./Components/Navbar";
 import {SearchResult} from "./Pages/SearchResult";
 import Home from "./Pages/Home";
 import {API} from "./API/API";
+import {ViewProduct} from "./Pages/ViewProduct";
 
 function App() {
 	const [searchKey, setSearchKey] = useState({
@@ -41,6 +42,7 @@ function App() {
 					<Routes>
 						<Route path='/' element={<Home handleChange={handleChange} searchKey={searchKey} search={search} />} />
 						<Route path='/search' element={<SearchResult prodList={prodList} searchKey={key} />} />
+						<Route path='/view' element={<ViewProduct />} />
 					</Routes>
 				</Router>
 			</AuthProvider>

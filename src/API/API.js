@@ -4,7 +4,8 @@ export const API = {
 	authenticate,
 	signup,
 	search,
-	addProduct
+	addProduct,
+	getProduct
 }
 
 function authenticate(username, password) {
@@ -35,6 +36,15 @@ function addProduct(user, product) {
 	})
 }
 
+function getProduct(user, productId) {
+	return instance.get(`/product/${productId}`, {
+		headers: {
+			'Content-type': 'application/json',
+			'Authorization': basicAuth(user)
+		}
+	})
+}
+
 // -- Axios
 
 const instance = axios.create({
@@ -44,5 +54,5 @@ const instance = axios.create({
 // -- Helper functions
 
 function basicAuth(user) {
-	return `Basic ${user.authdata}`
+	return `Basic ${user.authData}`
 }

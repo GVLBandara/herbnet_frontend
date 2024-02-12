@@ -41,8 +41,8 @@ function App() {
 					<Navbar handleChange={handleChange} handleSearch={search} searchKey={searchKey}/>
 					<Routes>
 						<Route path='/' element={<Home handleChange={handleChange} searchKey={searchKey} search={search} />} />
-						<Route path='/search' element={<SearchResult prodList={prodList} searchKey={key} />} />
-						<Route path='/view' element={<ViewProduct />} />
+						<Route path='/search/:key/:part/:state' element={<SearchResult prodList={prodList} searchKey={key} />} />
+						<Route path='/view/:productId' element={<ViewProduct />} />
 					</Routes>
 				</Router>
 			</AuthProvider>

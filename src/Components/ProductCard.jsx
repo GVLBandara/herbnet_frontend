@@ -28,8 +28,9 @@ export function ProductCard({data}) {
 
 			</div>
 			<div className={`flex flex-col p-2`}>
+				<div className={`font-bold`}>{data.plantData}</div>
 				<div className={`font-bold text-justify`}>{data.description}</div>
-				<div className={`my-6`}>
+				<div className={`my-3`}>
 					<div className={`text-[25px] font-semibold`}>Rs.{data.price} - {getRandomInt(1,6)*50}g</div>
 					<div className={`text-red-600 text-[20px] font-semibold`}>{getRandomInt(1, 14)}+kg sold</div>
 				</div>

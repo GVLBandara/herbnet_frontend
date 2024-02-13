@@ -1,7 +1,11 @@
 import React from 'react'
 import closeImg from '../Pages/Images/closebtn.png'
+import {useNavigate} from "react-router-dom";
+import {useAuth} from "./AuthContext";
 
 const ViewResult = ({close, plantData}) => {
+	const {userIsAuthenticated} = useAuth();
+	const navigate = useNavigate();
 
 	console.log('viewResult', plantData)
 
@@ -33,9 +37,14 @@ const ViewResult = ({close, plantData}) => {
 					</div>
 
 					<div className='w-[700px] h-[50px] flex flex-row items-center mt-[10px] justify-end'>
-						<button className="w-[120px] h-[30px] rounded-[5px] bg-[#ccc] text-[#000] mr-[10px]">
-							Sell this Plant
-						</button>
+						{userIsAuthenticated() ?
+							<button className="w-[120px] h-[30px] rounded-[5px] bg-[#ccc] text-[#000] mr-[10px]"
+									onClick={() => {
+										navigate(`/sell/${plantData.plantData.englishName}`);
+										close()
+									}}>Sell this Plant
+							</button> : <></>
+						}
 						<button className="w-[120px] h-[30px] rounded-[5px] bg-[#ccc] text-[#000]" onClick={close}>
 							Close
 						</button>

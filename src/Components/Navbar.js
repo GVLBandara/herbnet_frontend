@@ -162,7 +162,8 @@ function Navbar() {
 					{userIsAuthenticated() ?
 						<div className={`flex gap-4 items-center`}>
 							<button
-								className={`w-[180px] h-[45px] bg-[#fff] rounded-[10px] text-[18px] font-semibold hover:bg-[#17c270] text-[#000] hover:text-[#fff]`}>
+								className={`w-[180px] h-[45px] bg-[#fff] rounded-[10px] text-[18px] font-semibold hover:bg-[#17c270] text-[#000] hover:text-[#fff]`}
+							onClick={()=> navigate('/sell')}>
 								Sell Your Product
 							</button>
 							<button

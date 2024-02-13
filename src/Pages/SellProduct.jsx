@@ -1,8 +1,10 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useAuth} from "../Components/AuthContext";
 import {API} from "../API/API";
+import {useParams} from "react-router-dom";
 
 export function SellProduct() {
+	const{plantName} = useParams()
 	const auth = useAuth();
 	const [formData, setFormData] = useState({
 		plantName: '',
@@ -14,6 +16,15 @@ export function SellProduct() {
 		processingMethod: '',
 		location: ''
 	});
+
+	useEffect(() => {
+		if(plantName){
+			setFormData({...formData,
+				plantName: plantName.split('%20').join(' '),
+				processingMethod: 'Fresh'
+			})
+		}
+	}, []);
 
 	const handleChange = (event) => {
 		const {name, value} = event.target;

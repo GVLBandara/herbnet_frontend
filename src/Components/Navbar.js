@@ -29,13 +29,13 @@ function Navbar() {
 
 	useEffect(() => {
 		let params = location.pathname.split('/');
-		if(params[1]==='search'){
+		if (params[1] === 'search') {
 			setSearchKey({
 				key: params[2].split('%20').join(' '),
 				part: params[3],
 				state: params[4]
 			})
-		}else {
+		} else {
 			setSearchKey({
 				key: '',
 				part: '*',
@@ -58,7 +58,7 @@ function Navbar() {
 		}
 	}
 
-	const isHome = (location.pathname==='/');
+	const isHome = (location.pathname === '/');
 	const openDrop = () => {
 		setDrop(!drop);
 	}
@@ -87,71 +87,74 @@ function Navbar() {
 	return (
 		<div className={`relative z-10`}>
 			<div className={isHome ? styleHome : styleNotHome}>
-				<div className={`flex gap-3 items-center mr-16 cursor-pointer`} onClick={()=>{navigate('/')}}>
+				<div className={`flex gap-3 items-center mr-16 cursor-pointer`} onClick={() => {
+					navigate('/')
+				}}>
 					<img className={`w-16 rounded-2xl`} src={logo} alt={"Logo"}/>
 					<p className={`text-white text-[26px] font-bold`}>Herbnet</p>
 				</div>
-				{!isHome? <div className={`bg-white h-11 w-full flex justify-between items-center mx-12 rounded-[10px]`}>
-					<input
-						className={`pl-4 h-full w-full rounded-[10px] font-medium text-[#7b7b7b] focus:outline-none placeholder:text-[#7b7b7b]`}
-						type={"text"} placeholder={"Search for Products"}
-						name="key"
-						value={searchKey.key}
-						onChange={handleChange}
-						onKeyDown={event => {
-							if (event.key === 'Enter') handleSearch()
-						}}
-					/>
+				{!isHome ?
+					<div className={`bg-white h-11 w-full flex justify-between items-center mx-12 rounded-[10px]`}>
+						<input
+							className={`pl-4 h-full w-full rounded-[10px] font-medium text-[#7b7b7b] focus:outline-none placeholder:text-[#7b7b7b]`}
+							type={"text"} placeholder={"Search for Products"}
+							name="key"
+							value={searchKey.key}
+							onChange={handleChange}
+							onKeyDown={event => {
+								if (event.key === 'Enter') handleSearch()
+							}}
+						/>
 
-					<div className={`flex gap-[2px] h-full`}>
-						<div
-							className={`h-full text-[#7b7b7b] font-medium bg-gray-200 rounded-[10px] flex justify-around items-center gap-1 px-1`}>
-							<div className="relative">
-								<select
-									className={`bg-gray-200 appearance-none pl-1 pr-4 focus:outline-none`}
-									name="part"
-									value={searchKey.part}
-									onChange={handleChange}>
-									<option value="">All Parts</option>
-									<option value="Roots">Roots</option>
-									<option value="Leaves">Leaves</option>
-									<option value="Fruits">Fruits</option>
-									<option value="Flowers">Flowers</option>
-								</select>
-								<div className={`absolute inset-y-0 right-0 flex items-center pointer-events-none`}>
-									<IoIosArrowDown className={`fill-current text-gray-500`}/>
+						<div className={`flex gap-[2px] h-full`}>
+							<div
+								className={`h-full text-[#7b7b7b] font-medium bg-gray-200 rounded-[10px] flex justify-around items-center gap-1 px-1`}>
+								<div className="relative">
+									<select
+										className={`bg-gray-200 appearance-none pl-1 pr-4 focus:outline-none`}
+										name="part"
+										value={searchKey.part}
+										onChange={handleChange}>
+										<option value="">All Parts</option>
+										<option value="Roots">Roots</option>
+										<option value="Leaves">Leaves</option>
+										<option value="Fruits">Fruits</option>
+										<option value="Flowers">Flowers</option>
+									</select>
+									<div className={`absolute inset-y-0 right-0 flex items-center pointer-events-none`}>
+										<IoIosArrowDown className={`fill-current text-gray-500`}/>
+									</div>
 								</div>
 							</div>
-						</div>
 
-						<div
-							className={`h-full text-[#7b7b7b] font-medium bg-gray-200 rounded-[10px] flex justify-around items-center gap-1 px-1`}>
-							<div className="relative">
-								<select
-									className={`bg-gray-200 appearance-none pl-1 pr-4 focus:outline-none`}
-									name="state"
-									value={searchKey.state}
-									onChange={handleChange}>
-									<option value="">All States</option>
-									<option value="Fresh">Fresh</option>
-									<option value="Dried">Dried</option>
-									<option value="Juiced">Juiced</option>
-									<option value="Powdered">Powdered</option>
-								</select>
-								<div className={`absolute inset-y-0 right-0 flex items-center pointer-events-none`}>
-									<IoIosArrowDown className={`fill-current text-gray-500`}/>
+							<div
+								className={`h-full text-[#7b7b7b] font-medium bg-gray-200 rounded-[10px] flex justify-around items-center gap-1 px-1`}>
+								<div className="relative">
+									<select
+										className={`bg-gray-200 appearance-none pl-1 pr-4 focus:outline-none`}
+										name="state"
+										value={searchKey.state}
+										onChange={handleChange}>
+										<option value="">All States</option>
+										<option value="Fresh">Fresh</option>
+										<option value="Dried">Dried</option>
+										<option value="Juiced">Juiced</option>
+										<option value="Powdered">Powdered</option>
+									</select>
+									<div className={`absolute inset-y-0 right-0 flex items-center pointer-events-none`}>
+										<IoIosArrowDown className={`fill-current text-gray-500`}/>
+									</div>
 								</div>
 							</div>
-						</div>
 
-						<div
-							className={`h-full text-2xl text-[#7b7b7b] bg-gray-200 rounded-[10px] flex justify-around items-center px-2 cursor-pointer`}
-							onClick={handleSearch}>
-							<IoSearchSharp/>
-						</div>
+							<div
+								className={`h-full text-2xl text-[#7b7b7b] bg-gray-200 rounded-[10px] flex justify-around items-center px-2 cursor-pointer`}
+								onClick={handleSearch}>
+								<IoSearchSharp/>
+							</div>
 
-					</div>
-				</div>:<></>}
+						</div>
+					</div> : <></>}
 				<div className={`flex gap-4 items-center`}>
 					<div>
 						<button
@@ -163,7 +166,7 @@ function Navbar() {
 						<div className={`flex gap-4 items-center`}>
 							<button
 								className={`w-[180px] h-[45px] bg-[#fff] rounded-[10px] text-[18px] font-semibold hover:bg-[#17c270] text-[#000] hover:text-[#fff]`}
-							onClick={()=> navigate('/sell')}>
+								onClick={() => navigate('/sell')}>
 								Sell Your Product
 							</button>
 							<button
@@ -208,7 +211,11 @@ function Navbar() {
 							openDrop()
 						}}>LogOut
 						</li>
-						<li>Item 2</li>
+						<li onClick={() => {
+							openSignup();
+							openDrop()
+						}}>Edit Profile
+						</li>
 						<li>Item 3</li>
 					</ul>
 				</div> : <></>

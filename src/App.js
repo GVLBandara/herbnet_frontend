@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import './App.css';
 import {AuthProvider} from "./Components/AuthContext";
 import Navbar from "./Components/Navbar";
 import {SearchResult} from "./Pages/SearchResult";
 import Home from "./Pages/Home";
-import {API} from "./API/API";
 import {ViewProduct} from "./Pages/ViewProduct";
 import {SellProduct} from "./Pages/SellProduct";
 

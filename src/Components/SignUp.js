@@ -1,30 +1,43 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import closeImg from "../Pages/Images/closebtn.png";
-import {API} from "../API/API";
+import { API } from "../API/API";
+import { useAuth } from "./AuthContext";
 
-export function SignUp({close, login}) {
-	const [username, setUsername] = useState('')
-	const [email, setEmail] = useState("")
-	const [password, setPassword] = useState('')
+export function SignUp({ close, login }) {
+	const { userIsAuthenticated } = useAuth();
+	console.log(userIsAuthenticated);
+	const [signUpData, setSignUpData] = useState({
+		username: '',
+		email: '',
+		password: ''
+	});
+	const [profileData, setProfileData] = useState({
+		firstName: '',
+		lastName: '',
+		phone: ''
+	});
 
-	const handleInputChange = (e) => {
-		if (e.target.name === 'username') {
-			setUsername(e.target.value)
-		} else if (e.target.name === 'password') {
-			setPassword(e.target.value)
-		} else if (e.target.name === 'email') {
-			setEmail(e.target.value)
+	const handleInputChange = (event) => {
+		const { name, value } = event.target;
+		if (Object.keys(signUpData).includes(name)) {
+			setSignUpData({ ...signUpData, [name]: value });
+		} else {
+			setProfileData({ ...profileData, [name]: value });
 		}
 	}
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
+		let filled = true;
+		Object.values({ ...signUpData, ...profileData }).forEach(value => {
+			if (!(value)) filled = false;
+		})
 
-		if (!(username && email && password)) {
-			alert("Insert Username and Password");
+		if (!filled) {
+			alert("Fill all the fields!");
 		} else {
 			try {
-				const response = await API.signup({username, password, email});
+				const response = await API.signup(signUpData);
 				console.log(response.status)
 				login();
 			} catch (error) {
@@ -39,7 +52,7 @@ export function SignUp({close, login}) {
 				<div className='w-full h-[50px] bg-[#0f824b] rounded-t-[10px] flex items-center'>
 					<h1 className='w-[calc(100%-50px)] text-[25px] text-[#fff] flex items-center justify-center font-bold h-[50px]'>SignUp</h1>
 					<button onClick={close}>
-						<img className='w-[50px] h-[40px]' src={closeImg} alt="close_btn"/>
+						<img className='w-[50px] h-[40px]' src={closeImg} alt="close_btn" />
 					</button>
 				</div>
 
@@ -51,7 +64,7 @@ export function SignUp({close, login}) {
 								type="text"
 								id="username"
 								name="username"
-								value={username}
+								value={signUpData.username}
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -62,7 +75,40 @@ export function SignUp({close, login}) {
 								type="text"
 								id="email"
 								name="email"
-								value={email}
+								value={signUpData.email}
+								onChange={handleInputChange}
+							/>
+						</div>
+
+						<div>
+							<label htmlFor="firstName">First Name:</label>
+							<input
+								type="text"
+								id="firstName"
+								name="firstName"
+								value={profileData.firstName}
+								onChange={handleInputChange}
+							/>
+						</div>
+
+						<div>
+							<label htmlFor="lastName">Last Name:</label>
+							<input
+								type="text"
+								id="lastName"
+								name="lastName"
+								value={profileData.lastName}
+								onChange={handleInputChange}
+							/>
+						</div>
+
+						<div>
+							<label htmlFor="phone">Phone:</label>
+							<input
+								type="tel"
+								id="phone"
+								name="phone"
+								value={profileData.phone}
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -73,13 +119,23 @@ export function SignUp({close, login}) {
 								type="password"
 								id="password"
 								name="password"
-								value={password}
+								value={signUpData.password}
 								onChange={handleInputChange}
 							/>
 						</div>
-						<button className={`bg-blue-400`} type="submit">SignUp</button>
-						<p>Already member? <span className={`hover: text-blue-600 cursor-pointer`}
-												 onClick={login}>LogIn</span> here!</p>
+						{userIsAuthenticated() ?
+							<div>
+								<button className={`bg-blue-400`} type="submit">Update</button>
+							</div> :
+							<div>
+								<button className={`bg-blue-400`} type="submit">SignUp</button>
+								<p>Already member?
+									<span className={`hover: text-blue-600 cursor-pointer`}
+										onClick={login}>LogIn</span>
+									here!
+								</p>
+							</div>
+						}
 					</div>
 				</form>
 			</div>

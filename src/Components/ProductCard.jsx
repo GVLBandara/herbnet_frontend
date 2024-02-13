@@ -1,13 +1,18 @@
 import { IoMdHeartEmpty } from "react-icons/io";
+import {useNavigate} from "react-router-dom";
 export function ProductCard({data}) {
+	const navigate = useNavigate();
 	function getRandomInt(min, max) {
 		return Math.floor(Math.random() * (max - min) + min);
 	}
-
 	const plantName = 'Balloon vine'
 
+	const click = () => {
+	  navigate(`/view/${data.productId}`)
+	}
+
 	return (
-		<div className={`bg-gray-50 rounded-[10px] w-full h-full shadow-[0px_0px_10px_4px_rgba(0,0,0,0.3)]`} >
+		<div className={`bg-gray-50 rounded-[10px] w-full h-full shadow-[0px_0px_10px_4px_rgba(0,0,0,0.3)]`} onClick={click} >
 			<div className={`relative flex justify-end rounded-[10px] p-2`}
 				style={{
 					height: '19vw',

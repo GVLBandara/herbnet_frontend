@@ -46,6 +46,8 @@ export function SignUp({ close, login }) {
 		}
 	}
 
+	
+
 	return (
 		<div className={`w-[100vw] h-[100vh] flex justify-center items-center absolute top-0 bg-[#00000080]`}>
 			<div className={`w-[800px] h-[600px] bg-[#fff] rounded-[10px]`}>
@@ -56,22 +58,26 @@ export function SignUp({ close, login }) {
 					</button>
 				</div>
 
-				<form className={`w-full h-screen flex justify-center items-center`} onSubmit={handleSubmit}>
-					<div className={`h-[50vh] w-[30vw] bg-amber-300`}>
-						<div>
-							<label htmlFor="username">Username:</label>
+				<form className={`w-full h-[540px] flex justify-center items-center`} onSubmit={handleSubmit}>
+					<div className={`h-full w-full flex flex-col items-center justify-around py-12`}>
+						<div className={inputFieldDivStyle}>
+							{/* <label htmlFor="username">Username:</label> */}
 							<input
+							className={inputFieldSytle}
 								type="text"
 								id="username"
 								name="username"
+								placeholder="Username"
 								value={signUpData.username}
 								onChange={handleInputChange}
 							/>
 						</div>
 
-						<div>
-							<label htmlFor="email">Email:</label>
+						<div className={inputFieldDivStyle}>
+							{/* <label htmlFor="email">Email:</label> */}
 							<input
+							className={inputFieldSytle}
+							placeholder="Email"
 								type="text"
 								id="email"
 								name="email"
@@ -80,9 +86,11 @@ export function SignUp({ close, login }) {
 							/>
 						</div>
 
-						<div>
-							<label htmlFor="firstName">First Name:</label>
+						<div className={inputFieldDivStyle}>
+							{/* <label htmlFor="firstName">First Name:</label> */}
 							<input
+								className={inputFieldSytle}
+								placeholder="First Name"
 								type="text"
 								id="firstName"
 								name="firstName"
@@ -91,9 +99,11 @@ export function SignUp({ close, login }) {
 							/>
 						</div>
 
-						<div>
-							<label htmlFor="lastName">Last Name:</label>
+						<div className={inputFieldDivStyle}>
+							{/* <label htmlFor="lastName">Last Name:</label> */}
 							<input
+							className={inputFieldSytle}
+							placeholder="Last Name"
 								type="text"
 								id="lastName"
 								name="lastName"
@@ -102,9 +112,11 @@ export function SignUp({ close, login }) {
 							/>
 						</div>
 
-						<div>
-							<label htmlFor="phone">Phone:</label>
+						<div className={inputFieldDivStyle}>
+							{/* <label htmlFor="phone">Phone:</label> */}
 							<input
+							className={inputFieldSytle}
+							placeholder="Telephone"
 								type="tel"
 								id="phone"
 								name="phone"
@@ -113,9 +125,11 @@ export function SignUp({ close, login }) {
 							/>
 						</div>
 
-						<div>
-							<label htmlFor="password">Password:</label>
+						<div className={inputFieldDivStyle}>
+							{/* <label htmlFor="password">Password:</label> */}
 							<input
+							className={inputFieldSytle}
+							placeholder="Password"
 								type="password"
 								id="password"
 								name="password"
@@ -124,14 +138,14 @@ export function SignUp({ close, login }) {
 							/>
 						</div>
 						{userIsAuthenticated() ?
-							<div>
-								<button className={`bg-blue-400`} type="submit">Update</button>
+							<div  className=" w-full flex flex-col gap-3 items-center mt-10">
+								<button className={`hover:bg-[#232323] transition-all duration-200 w-1/2 rounded-lg text-white bg-[#0f824b] py-2`} type="submit">Update</button>
 							</div> :
-							<div>
-								<button className={`bg-blue-400`} type="submit">SignUp</button>
+							<div className=" w-full flex flex-col gap-3 items-center mt-10">
+								<button className={`hover:bg-[#232323] transition-all duration-200 w-1/2 rounded-lg text-white bg-[#0f824b] py-2`} type="submit">SignUp</button>
 								<p>Already member?
-									<span className={`hover: text-blue-600 cursor-pointer`}
-										onClick={login}>LogIn</span>
+									<span className={`hover:underline underline-offset-[5px] transition-all duration-150 text-blue-600 cursor-pointer`}
+										onClick={login}> Log In </span>
 									here!
 								</p>
 							</div>
@@ -142,3 +156,6 @@ export function SignUp({ close, login }) {
 		</div>
 	)
 }
+
+export const inputFieldDivStyle = "w-1/2 h-12";
+export const inputFieldSytle = " w-full h-3/4  border-[#999999] transition-all duration-200 outline-none focus:border-b-[#0f824b] border-b-2 px-2 ";

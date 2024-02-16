@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import {useAuth} from "./AuthContext";
 import closeImg from "../Pages/Images/closebtn.png";
 import {API} from "../API/API";
+import { inputFieldDivStyle, inputFieldSytle } from './SignUp';
 
 function Login({close, signup}) {
 	const Auth = useAuth()
@@ -48,11 +49,13 @@ function Login({close, signup}) {
 					</button>
 				</div>
 
-				<form className={`w-full h-screen flex justify-center items-center`} onSubmit={handleSubmit}>
-					<div className={`h-[50vh] w-[30vw] bg-amber-300`}>
-						<div>
-							<label htmlFor="username">Username:</label>
+				<form className={`w-full h-[540px] flex justify-center items-center`} onSubmit={handleSubmit}>
+					<div className={`h-full w-full flex gap-4 flex-col items-center justify-center`}>
+						<div className={inputFieldDivStyle}>
+							{/* <label htmlFor="username">Username:</label> */}
 							<input
+							className={inputFieldSytle}
+							placeholder='Username'
 								type="text"
 								id="username"
 								name="username"
@@ -61,9 +64,11 @@ function Login({close, signup}) {
 							/>
 						</div>
 
-						<div>
-							<label htmlFor="password">Password:</label>
+						<div className={inputFieldDivStyle}>
+							{/* <label htmlFor="password">Password:</label> */}
 							<input
+							className={inputFieldSytle}
+							placeholder='Password'
 								type="password"
 								id="password"
 								name="password"
@@ -71,8 +76,10 @@ function Login({close, signup}) {
 								onChange={handleInputChange}
 							/>
 						</div>
-						<button className={`bg-blue-400`} type="submit">LogIn</button>
-						<p>New member? <span className={`hover: text-blue-600 cursor-pointer`} onClick={signup}>Register</span> here!</p>
+						<div className='flex flex-col w-full items-center gap-4 mt-8'>
+							<button className={`hover:bg-[#232323] transition-all duration-200 w-1/2 rounded-lg text-white bg-[#0f824b] py-2`} type="submit">LogIn</button>
+							<p>New member? <span className={`hover:underline underline-offset-[5px] transition-all duration-150 text-blue-600 cursor-pointer`} onClick={signup}>Register</span> here!</p>
+						</div>
 					</div>
 				</form>
 			</div>

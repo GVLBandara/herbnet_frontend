@@ -1,10 +1,10 @@
-import {useEffect, useState} from "react";
-import {useAuth} from "../Components/AuthContext";
-import {API} from "../API/API";
-import {useParams} from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useAuth } from '../Components/AuthContext';
+import { API } from '../API/API';
+import { useParams } from 'react-router-dom';
 
 export function SellProduct() {
-	const{plantName} = useParams()
+	const { plantName } = useParams();
 	const auth = useAuth();
 	const [formData, setFormData] = useState({
 		plantName: '',
@@ -14,48 +14,51 @@ export function SellProduct() {
 		harvestDate: '',
 		plantOrgan: '',
 		processingMethod: '',
-		location: ''
+		location: '',
 	});
 
 	useEffect(() => {
-		if(plantName){
-			setFormData({...formData,
+		if (plantName) {
+			setFormData({
+				...formData,
 				plantName: plantName.split('%20').join(' '),
-				processingMethod: 'Fresh'
-			})
+				processingMethod: 'Fresh',
+			});
 		}
-	}, []);
+	});
 
 	const handleChange = (event) => {
-		const {name, value} = event.target;
-		setFormData({...formData, [name]: value});
+		const { name, value } = event.target;
+		setFormData({ ...formData, [name]: value });
 	};
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
 		if (formData.plantName && formData.harvestDate) {
-
 			try {
 				const response = await API.addProduct(auth.getUser(), formData);
 				console.log(response.status);
-			}catch (error){
+			} catch (error) {
 				console.log(error);
 			}
 		} else {
-			alert("Insert plant name and harvest date");
+			alert('Insert plant name and harvest date');
 		}
 		console.log('Form submitted:', formData);
 	};
 
 	return (
 		<div className={`flex justify-around items-center h-[85vh]`}>
-			<div className={`bg-white bg-opacity-40 flex flex-col justify-between h-[85vh] w-[60vw]`}>
-
+			<div
+				className={`bg-white bg-opacity-40 flex flex-col justify-between h-[85vh] w-[60vw]`}
+			>
 				<div className={`flex flex-col items-center gap-1`}>
 					<p className={`text-5xl`}>HerbNet Listing Submission Form</p>
-					<p className={`text-3xl`}>Fill out the details below to showcase and sell your herbal products on
-						HerbNet!</p>
+					<p className={`text-3xl`}>
+						Fill out the details below to showcase and sell your herbal products
+						on HerbNet!
+					</p>
 				</div>
 
 				<form className={`flex flex-col items-center`} onSubmit={handleSubmit}>
@@ -183,15 +186,15 @@ export function SellProduct() {
 								<div>
 									<h2>Quality Grade:</h2>
 									<div>
-										<input type="radio"/>
+										<input type="radio" />
 										<label htmlFor="premium">Premium</label>
 									</div>
 									<div>
-										<input type="radio"/>
+										<input type="radio" />
 										<label htmlFor="standard">Standard</label>
 									</div>
 									<div>
-										<input type="radio"/>
+										<input type="radio" />
 										<label htmlFor="bulk">Bulk</label>
 									</div>
 								</div>
@@ -199,15 +202,15 @@ export function SellProduct() {
 								<div>
 									<h2>Contact Information:</h2>
 									<div>
-										<input type="checkbox"/>
+										<input type="checkbox" />
 										<label htmlFor="name">Name</label>
 									</div>
 									<div>
-										<input type="checkbox"/>
+										<input type="checkbox" />
 										<label htmlFor="email">Email</label>
 									</div>
 									<div>
-										<input type="checkbox"/>
+										<input type="checkbox" />
 										<label htmlFor="phone">Phone</label>
 									</div>
 								</div>
@@ -225,19 +228,21 @@ export function SellProduct() {
 										list="plantNamesList"
 									/>
 									<datalist id="plantNamesList">
-										<option value="Candle Bush"/>
-										<option value="Long Pepper"/>
-										<option value="Sweet Flag"/>
-										<option value="Light blue snakeweed"/>
-										<option value="Ming aralia"/>
-										<option value="Skunk vine"/>
-										<option value="Balloon vine"/>
-										<option value="Grey Nicker"/>
-										<option value="Malabar nut"/>
+										<option value="Candle Bush" />
+										<option value="Long Pepper" />
+										<option value="Sweet Flag" />
+										<option value="Light blue snakeweed" />
+										<option value="Ming aralia" />
+										<option value="Skunk vine" />
+										<option value="Balloon vine" />
+										<option value="Grey Nicker" />
+										<option value="Malabar nut" />
 									</datalist>
 								</div>
 								<div>
-									<label htmlFor="productDescription">Product Description:</label>
+									<label htmlFor="productDescription">
+										Product Description:
+									</label>
 									<textarea
 										id="description"
 										name="description"
@@ -246,7 +251,9 @@ export function SellProduct() {
 									/>
 								</div>
 								<div>
-									<label htmlFor="additionalInformation">Additional Information:</label>
+									<label htmlFor="additionalInformation">
+										Additional Information:
+									</label>
 									<textarea
 										id="additionalInformation"
 										name="additionalInformation"
@@ -271,15 +278,18 @@ export function SellProduct() {
 									<input
 										type="text"
 										pattern="^\d+(\.\d{1})?$"
-										title="Enter a valid number"/>
+										title="Enter a valid number"
+									/>
 								</div>
 								<div>
 									<label htmlFor="origin">Origin:</label>
-									<input type="text"/>
+									<input type="text" />
 								</div>
 								<div>
-									<label htmlFor="storageRecommendations">Storage Recommendations:</label>
-									<textarea/>
+									<label htmlFor="storageRecommendations">
+										Storage Recommendations:
+									</label>
+									<textarea />
 								</div>
 								<div>
 									<label htmlFor="harvestDate">Harvest Date:</label>
@@ -400,12 +410,18 @@ export function SellProduct() {
 					<div className={`flex justify-center items-center gap-4`}>
 						<button
 							className={`w-[70px] h-[45px] bg-[#fff] rounded-[10px] text-[18px] font-semibold hover:bg-[#17c270] text-[#000] hover:text-[#fff]`}
-							type="submit">SUBMIT
+							type="submit"
+						>
+							SUBMIT
 						</button>
-						<p>By clicking SUBMIT you are agreeing to<br/>HerbNet's terms and conditions.</p>
+						<p>
+							By clicking SUBMIT you are agreeing to
+							<br />
+							HerbNet's terms and conditions.
+						</p>
 					</div>
 				</form>
 			</div>
 		</div>
-	)
+	);
 }

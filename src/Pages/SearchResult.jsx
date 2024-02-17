@@ -1,52 +1,45 @@
-import {ProductCard} from "../Components/ProductCard";
-import React, {useEffect, useState} from "react";
-import {IoIosArrowDown} from "react-icons/io";
-import {API} from "../API/API";
-import {useParams} from "react-router-dom";
+import { ProductCard } from '../Components/ProductCard';
+import React, { useEffect, useState } from 'react';
+import { IoIosArrowDown } from 'react-icons/io';
+import { API } from '../API/API';
+import { useParams } from 'react-router-dom';
 
 export function SearchResult() {
-	const params = useParams()
-	const [prodList, setProdList] = useState([])
+	const params = useParams();
+	const [prodList, setProdList] = useState([]);
 
 	useEffect(() => {
-		search()
-	}, []);
+		search();
+	});
 
 	const searchKey = {
 		key: params.key,
 		part: params.part,
-		state: params.state
-	}
+		state: params.state,
+	};
 
 	const search = async (e) => {
 		try {
 			const response = await API.search(searchKey);
-			setProdList(response.data)
+			setProdList(response.data);
 		} catch (error) {
-			console.log(error)
+			console.log(error);
 		}
-	}
+	};
 
 	const [formData, setFormData] = useState({
 		plantOrgan: '',
 		processingMethod: '',
-		location: ''
+		location: '',
 	});
 
-	const data = {
-		productId: 1,
-		plantName: "Balloon vine",
-		description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis earum laboriosam necessitatibus rem tempore voluptatibus!",
-		price: "175.00"
-	}
-
 	const capitalizeWords = (str) => {
-		return str.replace(/\b\w/g, match => match.toUpperCase());
-	}
+		return str.replace(/\b\w/g, (match) => match.toUpperCase());
+	};
 
 	const handleChange = (event) => {
-		const {name, value} = event.target;
-		setFormData({...formData, [name]: value});
+		const { name, value } = event.target;
+		setFormData({ ...formData, [name]: value });
 	};
 
 	return (
@@ -276,27 +269,41 @@ export function SearchResult() {
 			<div>
 				<div className={`flex justify-between items-center px-5`}>
 					<div className={`pt-5`}>
-						<p className={`text-5xl text-gray-500`}>Showing Results for <span
-							className={`text-black`}>{capitalizeWords(searchKey.key)}</span></p>
+						<p className={`text-5xl text-gray-500`}>
+							Showing Results for{' '}
+							<span className={`text-black`}>
+								{capitalizeWords(searchKey.key)}
+							</span>
+						</p>
 						<p className={`text-3xl`}>154 Results</p>
 					</div>
 					<div>
 						<div
-							className={`text-2xl text-[#7b7b7b] font-medium bg-gray-200 rounded-[8px] flex justify-around items-center gap-1 px-2 relative h-[55px]`}>
-							<p className={`bg-gray-200 appearance-none pl-1 pr-8 focus:outline-none`}>
+							className={`text-2xl text-[#7b7b7b] font-medium bg-gray-200 rounded-[8px] flex justify-around items-center gap-1 px-2 relative h-[55px]`}
+						>
+							<p
+								className={`bg-gray-200 appearance-none pl-1 pr-8 focus:outline-none`}
+							>
 								Sort: Best Match
 							</p>
-							<div className={`absolute inset-y-0 right-0 flex items-center pointer-events-none px-2`}>
-								<IoIosArrowDown className={`fill-current text-2xl text-gray-500`}/>
+							<div
+								className={`absolute inset-y-0 right-0 flex items-center pointer-events-none px-2`}
+							>
+								<IoIosArrowDown
+									className={`fill-current text-2xl text-gray-500`}
+								/>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div
-					className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7 w-[85vw] h-[calc(100vh-222px)] p-5 overflow-scroll overflow-x-hidden`}>
-					{prodList.map(product => <ProductCard key={product.productId} data={product}/>)}
+					className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7 w-[85vw] h-[calc(100vh-222px)] p-5 overflow-scroll overflow-x-hidden`}
+				>
+					{prodList.map((product) => (
+						<ProductCard key={product.productId} data={product} />
+					))}
 				</div>
 			</div>
 		</div>
-	)
+	);
 }

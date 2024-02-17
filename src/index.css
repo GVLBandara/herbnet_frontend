@@ -3,6 +3,6 @@
 @tailwind utilities;
 
 body {
-	background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url("./Pages/Images/pexels-magda-ehlers-3816343.jpg") center/cover no-repeat;
+	background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url("../public/pexels-magda-ehlers-3816343.jpg") center/cover no-repeat;
 	position: relative;
 }

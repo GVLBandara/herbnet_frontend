@@ -5,7 +5,10 @@ export const API = {
 	signup,
 	search,
 	addProduct,
+	updateProduct,
 	getProduct,
+	getMyProducts,
+	deleteProduct,
 };
 
 function authenticate(username, password) {
@@ -32,11 +35,26 @@ function search(key) {
 }
 
 function addProduct(user, product) {
-	return instance.post('/product', product, {
+	return instance.post('/product/new', product, {
 		headers: {
 			'Content-type': 'application/json',
 			Authorization: basicAuth(user),
 		},
+	});
+}
+
+function updateProduct(user, product) {
+	return instance.put('/product/update', product, {
+		headers: {
+			'Content-type': 'application/json',
+			Authorization: basicAuth(user),
+		},
+	});
+}
+
+function deleteProduct(user, productId) {
+	return instance.delete(`/product/delete/${productId}`, {
+		headers: { Authorization: basicAuth(user) },
 	});
 }
 
@@ -46,6 +64,12 @@ function getProduct(user, productId) {
 			'Content-type': 'application/json',
 			Authorization: basicAuth(user),
 		},
+	});
+}
+
+function getMyProducts(user) {
+	return instance.get(`/product`, {
+		headers: { Authorization: basicAuth(user) },
 	});
 }
 

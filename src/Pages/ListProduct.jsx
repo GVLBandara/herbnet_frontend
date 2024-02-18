@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../Components/AuthContext';
 import { API } from '../API/API';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-export function SellProduct() {
-	const { plantName } = useParams();
+export function ListProduct() {
+	const { plantName, productId } = useParams();
+	const navigate = useNavigate();
 	const auth = useAuth();
 	const [formData, setFormData] = useState({
 		plantName: '',
@@ -16,16 +17,38 @@ export function SellProduct() {
 		processingMethod: '',
 		location: '',
 	});
+	const [isNew, setIsNew] = useState(true);
 
 	useEffect(() => {
 		if (plantName) {
+			setIsNew(true);
 			setFormData({
 				...formData,
 				plantName: plantName.split('%20').join(' '),
 				processingMethod: 'Fresh',
 			});
+		} else if (productId) {
+			setIsNew(false);
+			getProduct();
 		}
-	});
+	}, []);
+
+	const getProduct = async () => {
+		try {
+			const response = await API.getProduct(auth.getUser(), productId);
+			setFormData({
+				...response.data,
+				harvestDate: formatDate(response.data.harvestDate),
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const formatDate = (date) => {
+		const [day, month, year] = date.split('/');
+		return `${year}-${month}-${day}`;
+	};
 
 	const handleChange = (event) => {
 		const { name, value } = event.target;
@@ -48,6 +71,23 @@ export function SellProduct() {
 		console.log('Form submitted:', formData);
 	};
 
+	const handleUpdate = async (event) => {
+		event.preventDefault();
+
+		if (formData.productId && formData.plantName && formData.harvestDate) {
+			try {
+				const response = await API.updateProduct(auth.getUser(), formData);
+				console.log(response.status);
+			} catch (error) {
+				console.log(error);
+			}
+		} else {
+			alert('Insert plant name and harvest date');
+		}
+		console.log('Product Updated:', formData);
+		// navigate('/myproducts');
+	};
+
 	return (
 		<div className={`flex justify-around items-center h-[85vh]`}>
 			<div
@@ -61,7 +101,7 @@ export function SellProduct() {
 					</p>
 				</div>
 
-				<form className={`flex flex-col items-center`} onSubmit={handleSubmit}>
+				<form className={`flex flex-col items-center`}>
 					<div>
 						<div className={`flex h-full px-2 gap-1`}>
 							<div className={`flex-grow`}>
@@ -408,12 +448,22 @@ export function SellProduct() {
 						</div>
 					</div>
 					<div className={`flex justify-center items-center gap-4`}>
-						<button
-							className={`w-[70px] h-[45px] bg-[#fff] rounded-[10px] text-[18px] font-semibold hover:bg-[#17c270] text-[#000] hover:text-[#fff]`}
-							type="submit"
-						>
-							SUBMIT
-						</button>
+						{isNew ? (
+							<button
+								className={`w-[70px] h-[45px] bg-[#fff] rounded-[10px] text-[18px] font-semibold hover:bg-[#17c270] text-[#000] hover:text-[#fff]`}
+								onClick={handleSubmit}
+							>
+								SUBMIT
+							</button>
+						) : (
+							<button
+								className={`w-[70px] h-[45px] bg-[#fff] rounded-[10px] text-[18px] font-semibold hover:bg-[#17c270] text-[#000] hover:text-[#fff]`}
+								onClick={handleUpdate}
+							>
+								UPDATE
+							</button>
+						)}
+
 						<p>
 							By clicking SUBMIT you are agreeing to
 							<br />

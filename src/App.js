@@ -1,26 +1,31 @@
 import React from 'react';
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import {AuthProvider} from "./Components/AuthContext";
-import Navbar from "./Components/Navbar";
-import {SearchResult} from "./Pages/SearchResult";
-import Home from "./Pages/Home";
-import {ViewProduct} from "./Pages/ViewProduct";
-import {SellProduct} from "./Pages/SellProduct";
+import { AuthProvider } from './Components/AuthContext';
+import Navbar from './Components/Navbar';
+import { SearchResult } from './Pages/SearchResult';
+import Home from './Pages/Home';
+import { ViewProduct } from './Pages/ViewProduct';
+import { ListProduct } from './Pages/ListProduct';
+import { MyProducts } from './Pages/MyProducts';
 
 function App() {
-
 	return (
 		<>
 			<AuthProvider>
 				<Router>
-					<Navbar/>
+					<Navbar />
 					<Routes>
-						<Route path='/' element={<Home/>} />
-						<Route path='/search/:key/:part/:state' element={<SearchResult/>} />
-						<Route path='/view/:productId' element={<ViewProduct />} />
-						<Route path='/sell/:plantName' element={<SellProduct/>} />
-						<Route path='/sell' element={<SellProduct/>} />
+						<Route path="/" element={<Home />} />
+						<Route
+							path="/search/:key/:part/:state"
+							element={<SearchResult />}
+						/>
+						<Route path="/view/:productId" element={<ViewProduct />} />
+						<Route path="/sell/:plantName" element={<ListProduct />} />
+						<Route path="/sell" element={<ListProduct />} />
+						<Route path="/edit/:productId" element={<ListProduct />} />
+						<Route path="/myproducts" element={<MyProducts />} />
 					</Routes>
 				</Router>
 			</AuthProvider>

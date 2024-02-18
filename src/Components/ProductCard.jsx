@@ -1,10 +1,13 @@
 import { IoMdHeartEmpty } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
+
 export function ProductCard({ data }) {
 	const navigate = useNavigate();
+
 	function getRandomInt(min, max) {
 		return Math.floor(Math.random() * (max - min) + min);
 	}
+
 	const plantName = 'Balloon vine';
 
 	const click = () => {

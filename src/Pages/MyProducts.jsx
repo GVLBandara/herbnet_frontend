@@ -56,8 +56,7 @@ export function MyProducts() {
 
 	const deleteProd = async (productId) => {
 		try {
-			const response = await API.deleteProduct(auth.getUser(), productId);
-			alert(`Status: ${response.status}`);
+			await API.deleteProduct(auth.getUser(), productId);
 			getData();
 		} catch (error) {
 			console.log(error);

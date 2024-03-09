@@ -253,7 +253,7 @@ function Navbar() {
 			)}
 			{drop ? (
 				<div
-					className={`text-white fixed right-[45px] top-[75px] transition-all duration-500 cursor-pointer`}
+					className={`text-white bg-slate-500 fixed right-[45px] top-[75px] transition-all duration-500 cursor-pointer`}
 				>
 					<ul className="dropdown-menu flex flex-col gap-2">
 						<li
@@ -272,7 +272,14 @@ function Navbar() {
 						>
 							Edit Profile
 						</li>
-						<li>Item 3</li>
+						<li
+							onClick={() => {
+								navigate('/myproducts');
+								openDrop();
+							}}
+						>
+							My Products
+						</li>
 					</ul>
 				</div>
 			) : (

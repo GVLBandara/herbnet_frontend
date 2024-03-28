@@ -8,6 +8,7 @@ import Home from './Pages/Home';
 import { ViewProduct } from './Pages/ViewProduct';
 import { ListProduct } from './Pages/ListProduct';
 import { MyProducts } from './Pages/MyProducts';
+import MessageBox from './Components/MessageBox';
 
 function App() {
 	return (
@@ -26,6 +27,7 @@ function App() {
 						<Route path="/sell" element={<ListProduct />} />
 						<Route path="/edit/:productId" element={<ListProduct />} />
 						<Route path="/myproducts" element={<MyProducts />} />
+						<Route path="/chat" element={<MessageBox />} />
 					</Routes>
 				</Router>
 			</AuthProvider>

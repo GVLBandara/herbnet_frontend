@@ -9,6 +9,8 @@ export const API = {
 	getProduct,
 	getMyProducts,
 	deleteProduct,
+	getChatList,
+	getMessageList,
 };
 
 function authenticate(username, password) {
@@ -73,13 +75,21 @@ function getMyProducts(user) {
 	});
 }
 
-// -- Axios
+function getChatList(user) {
+	return instance.get(`/message`, {
+		headers: { Authorization: basicAuth(user) },
+	});
+}
+
+function getMessageList(user, withUserId) {
+	return instance.get(`/message/${withUserId}`, {
+		headers: { Authorization: basicAuth(user) },
+	});
+}
 
 const instance = axios.create({
 	baseURL: 'http://localhost:8080',
 });
-
-// -- Helper functions
 
 function basicAuth(user) {
 	return `Basic ${user.authData}`;

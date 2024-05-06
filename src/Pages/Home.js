@@ -18,7 +18,9 @@ const Home = () => {
 	};
 
 	const handleSearch = () => {
-		if (searchKey.key || searchKey.part || searchKey.state) {
+		if (searchKey.key == '') {
+			alert('jnfdnfj');
+		} else {
 			navigate(`/search/${searchKey.key}/${searchKey.part}/${searchKey.state}`);
 		}
 	};

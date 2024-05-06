@@ -10,6 +10,7 @@ import profilePic from '../Pages/Images/img.png';
 import { IoIosArrowDown } from 'react-icons/io';
 import { IoSearchSharp } from 'react-icons/io5';
 import { useLocation, useNavigate } from 'react-router-dom';
+import MessageBox from './MessageBox';
 
 function Navbar() {
 	const { userIsAuthenticated, userLogout } = useAuth();
@@ -17,6 +18,7 @@ function Navbar() {
 	const [resultVisible, setResultVisible] = useState(false);
 	const [logInVisible, setLogInVisible] = useState(false);
 	const [singUpVisible, setSingUpVisible] = useState(false);
+	const [msgBoxVisible, setMsgBoxVisible] = useState(false);
 	const [plantData, setPlantData] = useState('');
 	const [drop, setDrop] = useState(false);
 	const navigate = useNavigate();
@@ -53,7 +55,9 @@ function Navbar() {
 	};
 
 	const handleSearch = () => {
-		if (searchKey.key) {
+		if (searchKey.key == '') {
+			alert('jnfdnfj');
+		} else {
 			navigate(`/search/${searchKey.key}/${searchKey.part}/${searchKey.state}`);
 		}
 	};
@@ -80,8 +84,13 @@ function Navbar() {
 		setSingUpVisible(!singUpVisible);
 	};
 
+	const openMessageBox = () => {
+		setMsgBoxVisible(!msgBoxVisible);
+	};
+
 	const logout = () => {
 		userLogout();
+		navigate('/');
 	};
 
 	return (
@@ -123,7 +132,7 @@ function Navbar() {
 										value={searchKey.part}
 										onChange={handleChange}
 									>
-										<option value="">All Parts</option>
+										<option value="*">All Parts</option>
 										<option value="Roots">Roots</option>
 										<option value="Leaves">Leaves</option>
 										<option value="Fruits">Fruits</option>
@@ -147,7 +156,7 @@ function Navbar() {
 										value={searchKey.state}
 										onChange={handleChange}
 									>
-										<option value="">All States</option>
+										<option value="*">All States</option>
 										<option value="Fresh">Fresh</option>
 										<option value="Dried">Dried</option>
 										<option value="Juiced">Juiced</option>
@@ -191,6 +200,7 @@ function Navbar() {
 							</button>
 							<button
 								className={`w-[70px] h-[45px] bg-[#fff] rounded-[10px] text-[18px] font-semibold hover:bg-[#17c270] text-[#000] hover:text-[#fff]`}
+								onClick={openMessageBox}
 							>
 								Chat
 							</button>
@@ -251,6 +261,7 @@ function Navbar() {
 			) : (
 				<></>
 			)}
+			{msgBoxVisible ? <MessageBox close={openMessageBox} /> : <></>}
 			{drop ? (
 				<div
 					className={`text-white bg-slate-500 fixed right-[45px] top-[75px] transition-all duration-500 cursor-pointer`}

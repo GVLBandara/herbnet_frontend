@@ -2,66 +2,37 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from './AuthContext';
 import { API } from '../API/API';
 import { IoClose } from 'react-icons/io5';
+import { IoIosSend } from 'react-icons/io';
+import { FaCheckDouble } from 'react-icons/fa';
 
 const MessageBox = ({ close }) => {
 	const auth = useAuth();
 	const [chat, setChat] = useState(0);
-	const [chatList, setChatList] = useState([
-		{
-			withUserId: 6,
-			withUserName: 'Grace Brown',
-			message: 'Last inquiry about Plant1.',
-			timestamp: '2023-11-16T15:00:00',
-			isRead: true,
-		},
-		{
-			withUserId: 4,
-			withUserName: 'Eva Williams',
-			message: 'Another message about Plant1.',
-			timestamp: '2023-11-16T13:20:00',
-			isRead: true,
-		},
-		{
-			withUserId: 2,
-			withUserName: 'Alice Smith',
-			message: 'messageContent',
-			timestamp: '2024-01-08T00:25:53',
-			isRead: false,
-		},
-	]);
-	const [messageList, setMessageList] = useState([
-		{
-			senderId: 2,
-			message: 'messageContent',
-			isRead: false,
-			timestamp: '2024-01-08T00:25:53',
-		},
-		{
-			senderId: 2,
-			message: 'Hi! Sure, what information would you like about Plant2?',
-			isRead: false,
-			timestamp: '2023-11-16T15:45:00',
-		},
-		{
-			senderId: 1,
-			message: "Hello! I'm interested in your Plant1.",
-			isRead: true,
-			timestamp: '2023-11-16T15:30:00',
-		},
-	]);
-	// useEffect(() => {
-	// 	getChatList();
-	// }, []);
+	const [newMessage, setNewMessage] = useState('');
+	const [chatList, setChatList] = useState([]);
+	const [messageList, setMessageList] = useState([]);
+	useEffect(() => {
+		getChatList();
+	}, []);
 
-	// useEffect(() => {
-	// 	if (chat !== 0) getMessageList();
-	// }, [chat]);
+	useEffect(() => {
+		if (chat !== 0) getMessageList();
+		setNewMessage({
+			receiverId: chat,
+			productId: 1,
+			messageContent: '',
+		});
+	}, [chat]);
 
 	const getChatList = async (e) => {
 		try {
 			const response = await API.getChatList(auth.getUser());
-			setChatList(response.data);
-			console.log(chatList);
+			setChatList(
+				response.data.sort(
+					(a, b) => new Date(a.timeStamp) - new Date(b.timeStamp)
+				)
+			);
+			console.log(response.data);
 		} catch (error) {
 			console.log(error);
 		}
@@ -70,11 +41,35 @@ const MessageBox = ({ close }) => {
 	const getMessageList = async (e) => {
 		try {
 			const response = await API.getMessageList(auth.getUser(), chat);
-			setMessageList(response.data);
-			console.log(messageList);
+			setMessageList(
+				response.data
+					.sort((a, b) => new Date(a.timeStamp) - new Date(b.timeStamp))
+					.reverse()
+			);
+			console.log(response.data);
 		} catch (error) {
 			console.log(error);
 		}
+	};
+
+	const sendMessage = async (e) => {
+		try {
+			const response = await API.sendMessage(auth.getUser(), newMessage);
+			console.log(response);
+		} catch (error) {
+			console.log(error);
+		}
+		setNewMessage({ ...newMessage, messageContent: '' });
+		getMessageList();
+	};
+
+	const handleChange = (event) => {
+		setNewMessage({
+			receiverId: chat,
+			productId: 1,
+			messageContent: event.target.value,
+		});
+		console.log(newMessage);
 	};
 
 	const Chat = ({ data }) => {
@@ -92,20 +87,38 @@ const MessageBox = ({ close }) => {
 
 	const ChatView = ({ messageList, chat }) => {
 		return (
-			<h1>
+			<div
+				className={`overflow-scroll overflow-x-hidden flex flex-col gap-1 justify-between`}
+			>
 				{messageList.map((message) => {
 					return (
-						<h1
+						<div
 							className={
-								message.senderId == chat ? `bg-blue-400` : `bg-green-400`
+								message.senderId == chat
+									? `bg-blue-400 w-fit`
+									: `bg-green-400 self-end`
 							}
 							key={message.timestamp}
 						>
-							{message.message}
-						</h1>
+							<div className={`w-fit`}>
+								<h1>{message.message}</h1>
+								<h1 className={`text-[13px] flex gap-4 justify-between`}>
+									{new Date(message.timestamp).toLocaleTimeString()}
+									{message.senderId != chat ? (
+										<FaCheckDouble
+											className={
+												message.isRead ? ` text-blue-600` : ` text-gray-500`
+											}
+										/>
+									) : (
+										<></>
+									)}
+								</h1>
+							</div>
+						</div>
 					);
 				})}
-			</h1>
+			</div>
 		);
 	};
 
@@ -120,24 +133,35 @@ const MessageBox = ({ close }) => {
 					</h1>
 					<IoClose className={`text-white text-5xl`} onClick={close} />
 				</div>
-				<div className={`flex justify-around`}>
-					<div>
+				<div className={`flex h-[550px]`}>
+					<div className={`w-1/4 m-2 bg-purple-200`}>
 						{chatList.map((chat) => (
-							<Chat
-								key={chat.withUserId}
-								data={{ ...chat, setChat }}
-								onClick={() => {
-									console.log('test');
-								}}
-							/>
+							<Chat key={chat.withUserId} data={{ ...chat, setChat }} />
 						))}
 					</div>
-					<div>
+					<div
+						className={`w-3/4 m-2 flex flex-col justify-between bg-lime-300`}
+					>
 						{chat !== 0 ? (
 							<ChatView messageList={messageList} chat={chat} />
 						) : (
 							<h1>Empty</h1>
 						)}
+						<div className={`w-full flex`}>
+							<input
+								className={`w-full text-3xl m-2`}
+								type="text"
+								value={newMessage.messageContent}
+								onChange={handleChange}
+								onKeyDown={(event) => {
+									if (event.key === 'Enter') sendMessage();
+								}}
+							/>
+							<IoIosSend
+								className={`text-5xl cursor-pointer`}
+								onClick={sendMessage}
+							/>
+						</div>
 					</div>
 				</div>
 			</div>

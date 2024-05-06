@@ -11,6 +11,7 @@ export const API = {
 	deleteProduct,
 	getChatList,
 	getMessageList,
+	sendMessage,
 };
 
 function authenticate(username, password) {
@@ -84,6 +85,15 @@ function getChatList(user) {
 function getMessageList(user, withUserId) {
 	return instance.get(`/message/${withUserId}`, {
 		headers: { Authorization: basicAuth(user) },
+	});
+}
+
+function sendMessage(user, message) {
+	return instance.post('/message', message, {
+		headers: {
+			'Content-type': 'application/json',
+			Authorization: basicAuth(user),
+		},
 	});
 }
 

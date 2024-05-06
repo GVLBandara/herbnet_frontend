@@ -2,6 +2,8 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { API } from '../API/API';
 import { useAuth } from '../Components/AuthContext';
+import { IoIosSend } from 'react-icons/io';
+import { IoClose } from 'react-icons/io5';
 
 export function ViewProduct() {
 	useEffect(() => {
@@ -33,6 +35,8 @@ export function ViewProduct() {
 		harvestDate: '20/11/2023',
 		listingDate: '20/11/2023',
 	});
+	const [msgBoxVisible, setMsgBoxVisible] = useState(false);
+	const [newMessage, setNewMessage] = useState('');
 
 	const getProduct = async () => {
 		try {
@@ -49,6 +53,30 @@ export function ViewProduct() {
 		} catch (error) {
 			console.log(error);
 		}
+	};
+
+	const handleContact = () => {
+		setMsgBoxVisible(!msgBoxVisible);
+	};
+
+	const handleChange = (event) => {
+		setNewMessage({
+			receiverId: product.userId,
+			productId: product.productId,
+			messageContent: event.target.value,
+		});
+		console.log(newMessage);
+	};
+
+	const sendMessage = async (e) => {
+		try {
+			const response = await API.sendMessage(auth.getUser(), newMessage);
+			console.log(response);
+		} catch (error) {
+			console.log(error);
+		}
+		setNewMessage({ ...newMessage, messageContent: '' });
+		handleContact();
 	};
 
 	return (
@@ -68,7 +96,7 @@ export function ViewProduct() {
 						}}
 					/>
 					<div
-						className={`bg-white h-full w-full pl-[20px] pr-[20px] pt-[15px]`}
+						className={`bg-white h-full w-full pl-[20px] pr-[20px] pt-[15px] overflow-scroll overflow-x-hidden`}
 					>
 						<b>
 							<p className={'text-[24px] mb-[15px]'}>Premium Turmeric Roots</p>
@@ -211,11 +239,36 @@ export function ViewProduct() {
 								</tbody>
 							</table>
 						</span>
-						<button
-							className={`h-[45px] bg-[#008f85] text-[#fff] text-4xl rounded-[10px] text-[18px] px-4`}
-						>
-							Contact Seller
-						</button>
+						{msgBoxVisible ? (
+							<div className={`bg-green-300`}>
+								<div className={`flex justify-between`}>
+									<h1 className={`text-2xl`}>Message Seller</h1>
+									<IoClose
+										className={`text-3xl m-1 cursor-pointer`}
+										onClick={handleContact}
+									/>
+								</div>
+								<div className={`w-full flex`}>
+									<input
+										className={`w-full text-3xl m-2`}
+										type="text"
+										value={newMessage.messageContent}
+										onChange={handleChange}
+									/>
+									<IoIosSend
+										className={`text-5xl cursor-pointer`}
+										onClick={sendMessage}
+									/>
+								</div>
+							</div>
+						) : (
+							<button
+								className={`h-[45px] bg-[#008f85] text-[#fff] text-4xl rounded-[10px] text-[18px] px-4`}
+								onClick={handleContact}
+							>
+								Contact Seller
+							</button>
+						)}
 					</div>
 				</div>
 			</div>

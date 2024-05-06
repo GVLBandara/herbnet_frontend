@@ -27,7 +27,6 @@ function App() {
 						<Route path="/sell" element={<ListProduct />} />
 						<Route path="/edit/:productId" element={<ListProduct />} />
 						<Route path="/myproducts" element={<MyProducts />} />
-						<Route path="/chat" element={<MessageBox />} />
 					</Routes>
 				</Router>
 			</AuthProvider>

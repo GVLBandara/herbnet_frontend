@@ -10,7 +10,7 @@ export function SearchResult() {
 
 	useEffect(() => {
 		search();
-	});
+	}, []);
 
 	const searchKey = {
 		key: params.key,

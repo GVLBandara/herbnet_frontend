@@ -4,6 +4,7 @@ import { API } from '../API/API';
 import { IoClose } from 'react-icons/io5';
 import { IoIosSend } from 'react-icons/io';
 import { FaCheckDouble } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const MessageBox = ({ close }) => {
 	const auth = useAuth();
@@ -19,12 +20,11 @@ const MessageBox = ({ close }) => {
 		if (chat !== 0) getMessageList();
 		setNewMessage({
 			receiverId: chat,
-			productId: 1,
 			messageContent: '',
 		});
 	}, [chat]);
 
-	const getChatList = async (e) => {
+	const getChatList = async () => {
 		try {
 			const response = await API.getChatList(auth.getUser());
 			setChatList(
@@ -38,7 +38,7 @@ const MessageBox = ({ close }) => {
 		}
 	};
 
-	const getMessageList = async (e) => {
+	const getMessageList = async () => {
 		try {
 			const response = await API.getMessageList(auth.getUser(), chat);
 			setMessageList(
@@ -52,7 +52,7 @@ const MessageBox = ({ close }) => {
 		}
 	};
 
-	const sendMessage = async (e) => {
+	const sendMessage = async () => {
 		try {
 			const response = await API.sendMessage(auth.getUser(), newMessage);
 			console.log(response);
@@ -66,7 +66,6 @@ const MessageBox = ({ close }) => {
 	const handleChange = (event) => {
 		setNewMessage({
 			receiverId: chat,
-			productId: 1,
 			messageContent: event.target.value,
 		});
 		console.log(newMessage);
@@ -101,7 +100,23 @@ const MessageBox = ({ close }) => {
 							key={message.timestamp}
 						>
 							<div className={`w-fit`}>
+								{message.productId ? (
+									<div className={`flex gap-1 text-[13px]`}>
+										<h1>About</h1>
+										<h1
+											className={`cursor-pointer text-blue-700`}
+											onClick={() =>
+												window.open(`/view/${message.productId}`, '_blank')
+											}
+										>
+											this product
+										</h1>
+									</div>
+								) : (
+									<></>
+								)}
 								<h1>{message.message}</h1>
+
 								<h1 className={`text-[13px] flex gap-4 justify-between`}>
 									{new Date(message.timestamp).toLocaleTimeString()}
 									{message.senderId != chat ? (

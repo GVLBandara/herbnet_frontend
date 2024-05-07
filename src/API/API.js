@@ -3,6 +3,7 @@ import axios from 'axios';
 export const API = {
 	authenticate,
 	signup,
+	getProfile,
 	search,
 	addProduct,
 	updateProduct,
@@ -27,6 +28,13 @@ function authenticate(username, password) {
 function signup(user) {
 	return instance.post('/auth/signup', user, {
 		headers: { 'Content-type': 'application/json' },
+	});
+}
+
+function getProfile(user) {
+	const url = `/userprofile`;
+	return instance.get(url, {
+		headers: { Authorization: basicAuth(user) },
 	});
 }
 

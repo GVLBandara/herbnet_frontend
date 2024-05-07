@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { API } from '../API/API';
 import { useAuth } from './AuthContext';
 
 export function SignUp({ close, login }) {
-	const { userIsAuthenticated } = useAuth();
-	console.log(userIsAuthenticated);
+	const { userIsAuthenticated, getUser } = useAuth();
 	const [signUpData, setSignUpData] = useState({
 		username: '',
 		email: '',
@@ -16,6 +15,29 @@ export function SignUp({ close, login }) {
 		lastName: '',
 		phone: '',
 	});
+
+	useEffect(() => {
+		if (userIsAuthenticated()) setData();
+	}, []);
+
+	const setData = async (e) => {
+		try {
+			const { data } = await API.getProfile(getUser());
+			console.log(data);
+			setSignUpData({
+				...signUpData,
+				email: data.email,
+			});
+
+			setProfileData({
+				firstName: data.firstName,
+				lastName: data.lastName,
+				phone: data.phone,
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	const handleInputChange = (event) => {
 		const { name, value } = event.target;
@@ -53,7 +75,7 @@ export function SignUp({ close, login }) {
 			<div className={`w-[800px] h-[600px] bg-[#fff] rounded-[10px]`}>
 				<div className="w-full h-[50px] bg-[#0f824b] rounded-t-[10px] flex items-center">
 					<h1 className="w-[calc(100%-50px)] text-[25px] text-[#fff] flex items-center justify-center font-bold h-[50px]">
-						SignUp
+						{userIsAuthenticated() ? `Edit Profile` : `SignUn`}
 					</h1>
 					<IoClose className={`text-white text-5xl`} onClick={close} />
 				</div>
@@ -65,31 +87,22 @@ export function SignUp({ close, login }) {
 					<div
 						className={`h-full w-full flex flex-col items-center justify-around py-12`}
 					>
-						<div className={inputFieldDivStyle}>
-							{/* <label htmlFor="username">Username:</label> */}
-							<input
-								className={inputFieldSytle}
-								type="text"
-								id="username"
-								name="username"
-								placeholder="Username"
-								value={signUpData.username}
-								onChange={handleInputChange}
-							/>
-						</div>
-
-						<div className={inputFieldDivStyle}>
-							{/* <label htmlFor="email">Email:</label> */}
-							<input
-								className={inputFieldSytle}
-								placeholder="Email"
-								type="text"
-								id="email"
-								name="email"
-								value={signUpData.email}
-								onChange={handleInputChange}
-							/>
-						</div>
+						{!userIsAuthenticated() ? (
+							<div className={inputFieldDivStyle}>
+								{/* <label htmlFor="username">Username:</label> */}
+								<input
+									className={inputFieldSytle}
+									type="text"
+									id="username"
+									name="username"
+									placeholder="Username"
+									value={signUpData.username}
+									onChange={handleInputChange}
+								/>
+							</div>
+						) : (
+							<></>
+						)}
 
 						<div className={inputFieldDivStyle}>
 							{/* <label htmlFor="firstName">First Name:</label> */}
@@ -118,6 +131,19 @@ export function SignUp({ close, login }) {
 						</div>
 
 						<div className={inputFieldDivStyle}>
+							{/* <label htmlFor="email">Email:</label> */}
+							<input
+								className={inputFieldSytle}
+								placeholder="Email"
+								type="text"
+								id="email"
+								name="email"
+								value={signUpData.email}
+								onChange={handleInputChange}
+							/>
+						</div>
+
+						<div className={inputFieldDivStyle}>
 							{/* <label htmlFor="phone">Phone:</label> */}
 							<input
 								className={inputFieldSytle}
@@ -129,19 +155,23 @@ export function SignUp({ close, login }) {
 								onChange={handleInputChange}
 							/>
 						</div>
+						{!userIsAuthenticated() ? (
+							<div className={inputFieldDivStyle}>
+								{/* <label htmlFor="password">Password:</label> */}
+								<input
+									className={inputFieldSytle}
+									placeholder="Password"
+									type="password"
+									id="password"
+									name="password"
+									value={signUpData.password}
+									onChange={handleInputChange}
+								/>
+							</div>
+						) : (
+							<></>
+						)}
 
-						<div className={inputFieldDivStyle}>
-							{/* <label htmlFor="password">Password:</label> */}
-							<input
-								className={inputFieldSytle}
-								placeholder="Password"
-								type="password"
-								id="password"
-								name="password"
-								value={signUpData.password}
-								onChange={handleInputChange}
-							/>
-						</div>
 						{userIsAuthenticated() ? (
 							<div className=" w-full flex flex-col gap-3 items-center mt-10">
 								<button

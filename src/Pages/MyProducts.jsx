@@ -4,6 +4,7 @@ import { API } from '../API/API';
 import { FiEdit } from 'react-icons/fi';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
+import { IoMdHeartEmpty } from 'react-icons/io';
 
 export function MyProducts() {
 	const auth = useAuth();
@@ -66,31 +67,52 @@ export function MyProducts() {
 	console.log(prodList);
 
 	const Card = ({ data }) => {
+		data.plantName = 'Balloon vine';
 		return (
-			<div className="bg-white border-2 border-red-600">
-				<h1>{data.plantData}</h1>
-				<h1>{data.description}</h1>
-				<h1>
-					Rs.{data.price} - {getRandomInt(1, 6) * 50}g
-				</h1>
-				<FiEdit
-					className="text-4xl"
-					onClick={() => {
-						edit(data.productId);
+			<div
+				className={`bg-gray-50 rounded-[10px] w-full h-fit shadow-[0px_0px_10px_4px_rgba(0,0,0,0.3)]`}
+				onClick={() => {
+					navigate(`/view/${data.productId}`);
+				}}
+			>
+				<div
+					className={`relative flex justify-end rounded-[10px] p-2`}
+					style={{
+						height: '15vw',
+						backgroundImage: `url('/ProductImages/${
+							data.plantName
+						}${getRandomInt(0, 2)}.jpg')`,
+						backgroundSize: 'cover',
+						backgroundPosition: 'center',
+						backgroundRepeat: 'no-repeat',
 					}}
-				/>
-				<RiDeleteBin5Line
-					className="text-4xl"
-					onClick={() => {
-						deleteProd(data.productId);
-					}}
-				/>
+				></div>
+				<div className={`flex flex-col p-2`}>
+					<div className={`font-bold`}>{data.plantData}</div>
+					<div className={`font-bold text-justify`}>{data.description}</div>
+					<div className={`flex justify-between`}>
+						<FiEdit
+							className="text-4xl"
+							onClick={() => {
+								edit(data.productId);
+							}}
+						/>
+						<RiDeleteBin5Line
+							className="text-4xl"
+							onClick={() => {
+								deleteProd(data.productId);
+							}}
+						/>
+					</div>
+				</div>
 			</div>
 		);
 	};
 
 	return (
-		<div>
+		<div
+			className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-7 h-[calc(100vh-100px)] p-5 overflow-scroll overflow-x-hidden`}
+		>
 			{prodList.map((product) => (
 				<Card key={product.productId} data={product} />
 			))}

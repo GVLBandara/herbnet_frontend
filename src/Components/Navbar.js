@@ -56,7 +56,7 @@ function Navbar() {
 
 	const handleSearch = () => {
 		if (searchKey.key == '') {
-			alert('jnfdnfj');
+			alert('Search keyword cannot be empty!');
 		} else {
 			navigate(`/search/${searchKey.key}/${searchKey.part}/${searchKey.state}`);
 		}

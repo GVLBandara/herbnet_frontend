@@ -22,14 +22,20 @@ const MessageBox = ({ close }) => {
 			receiverId: chat,
 			messageContent: '',
 		});
+		getChatList();
 	}, [chat]);
+
+	// const chatRefresh = setInterval(() => {
+	// 	getChatList();
+	// 	if (chat != 0) getMessageList();
+	// }, 2000);
 
 	const getChatList = async () => {
 		try {
 			const response = await API.getChatList(auth.getUser());
 			setChatList(
 				response.data.sort(
-					(a, b) => new Date(a.timeStamp) - new Date(b.timeStamp)
+					(a, b) => new Date(b.timestamp) - new Date(a.timestamp)
 				)
 			);
 			console.log(response.data);
@@ -43,7 +49,7 @@ const MessageBox = ({ close }) => {
 			const response = await API.getMessageList(auth.getUser(), chat);
 			setMessageList(
 				response.data
-					.sort((a, b) => new Date(a.timeStamp) - new Date(b.timeStamp))
+					.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
 					.reverse()
 			);
 			console.log(response.data);
@@ -73,14 +79,17 @@ const MessageBox = ({ close }) => {
 
 	const Chat = ({ data }) => {
 		return (
-			<h1
-				className={`cursor-pointer`}
+			<div
+				className={`cursor-pointer ${
+					data.withUserId != data.owner && data.isRead ? `` : `bg-blue-300`
+				}`}
 				onClick={() => {
 					data.setChat(data.withUserId);
 				}}
 			>
-				{data.withUserName}
-			</h1>
+				<h1 className={`font-bold`}>{data.withUserName}</h1>
+				<h1 className={`text-[15px]`}>{data.message.substring(0, 20)}...</h1>
+			</div>
 		);
 	};
 
@@ -160,7 +169,9 @@ const MessageBox = ({ close }) => {
 						{chat !== 0 ? (
 							<ChatView messageList={messageList} chat={chat} />
 						) : (
-							<h1>Empty</h1>
+							<div className={`flex h-full w-full items-center justify-center`}>
+								<h1>Select a Chat</h1>
+							</div>
 						)}
 						<div className={`w-full flex`}>
 							<input

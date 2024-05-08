@@ -51,19 +51,41 @@ export function SignUp({ close, login }) {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		let filled = true;
-		Object.values({ ...signUpData, ...profileData }).forEach((value) => {
-			if (!value) filled = false;
-		});
+
+		const { email } = signUpData;
+		if (userIsAuthenticated()) {
+			Object.values({ email, ...profileData }).forEach((value) => {
+				if (!value) filled = false;
+			});
+		} else {
+			Object.values({ ...signUpData, ...profileData }).forEach((value) => {
+				if (!value) filled = false;
+			});
+		}
 
 		if (!filled) {
 			alert('Fill all the fields!');
 		} else {
-			try {
-				const response = await API.signup(signUpData);
-				console.log(response.status);
-				login();
-			} catch (error) {
-				console.error('Error :', error);
+			if (userIsAuthenticated()) {
+				try {
+					const response = await API.updateProfile(getUser(), {
+						email,
+						...profileData,
+					});
+					console.log(response.status);
+					alert('Profile updated successfully');
+					close();
+				} catch (error) {
+					console.error('Error :', error);
+				}
+			} else {
+				try {
+					const response = await API.signup(signUpData);
+					console.log(response.status);
+					login();
+				} catch (error) {
+					console.error('Error :', error);
+				}
 			}
 		}
 	};

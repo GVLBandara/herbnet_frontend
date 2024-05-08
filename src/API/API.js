@@ -4,6 +4,7 @@ export const API = {
 	authenticate,
 	signup,
 	getProfile,
+	updateProfile,
 	search,
 	addProduct,
 	updateProduct,
@@ -34,6 +35,12 @@ function signup(user) {
 function getProfile(user) {
 	const url = `/userprofile`;
 	return instance.get(url, {
+		headers: { Authorization: basicAuth(user) },
+	});
+}
+
+function updateProfile(user, profile) {
+	return instance.put('/userprofile', profile, {
 		headers: { Authorization: basicAuth(user) },
 	});
 }

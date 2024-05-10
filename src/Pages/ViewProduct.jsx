@@ -8,7 +8,8 @@ import { IoClose } from 'react-icons/io5';
 export function ViewProduct() {
 	useEffect(() => {
 		getProduct();
-	});
+		setImgNum(getRandomInt(0, 3));
+	}, []);
 
 	const { productId } = useParams();
 	const auth = useAuth();
@@ -37,23 +38,27 @@ export function ViewProduct() {
 	});
 	const [msgBoxVisible, setMsgBoxVisible] = useState(false);
 	const [newMessage, setNewMessage] = useState('');
+	const [imgNum, setImgNum] = useState('');
 
 	const getProduct = async () => {
 		try {
 			const response = await API.getProduct(auth.getUser(), productId);
 			setProduct(response.data);
-			setProduct({
-				...response.data,
-				plantName: 'Balloon vine',
-				description:
-					'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam, sapiente.',
-				additionalInformation:
-					'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, assumenda at debitis delectus fuga impedit maiores minus nobis nulla obcaecati officiis placeat quas quo quos sint ut voluptatem voluptates! Beatae dignissimos dolor perferendis rem reprehenderit. Cum cumque et eum minus quibusdam repellat sequi vel voluptas voluptates. Adipisci consequatur doloru',
-			});
+			// setProduct({
+			// 	...response.data,
+			// 	description:
+			// 		'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam, sapiente.',
+			// 	additionalInformation:
+			// 		'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, assumenda at debitis delectus fuga impedit maiores minus nobis nulla obcaecati officiis placeat quas quo quos sint ut voluptatem voluptates! Beatae dignissimos dolor perferendis rem reprehenderit. Cum cumque et eum minus quibusdam repellat sequi vel voluptas voluptates. Adipisci consequatur doloru',
+			// });
 		} catch (error) {
 			console.log(error);
 		}
 	};
+
+	function getRandomInt(min, max) {
+		return Math.floor(Math.random() * (max - min) + min);
+	}
 
 	const handleContact = () => {
 		setMsgBoxVisible(!msgBoxVisible);
@@ -92,14 +97,16 @@ export function ViewProduct() {
 					<div
 						className={`aspect-square bg-cover bg-no-repeat bg-center`}
 						style={{
-							backgroundImage: `url('/ProductImages/${product.plantName}1.jpg')`,
+							backgroundImage: `url('/ProductImages/${product.plantName}${imgNum}.jpg')`,
 						}}
 					/>
 					<div
 						className={`bg-white h-full w-full pl-[20px] pr-[20px] pt-[15px] overflow-scroll overflow-x-hidden`}
 					>
 						<b>
-							<p className={'text-[24px] mb-[15px]'}>Premium Turmeric Roots</p>
+							<p
+								className={'text-[24px] mb-[15px]'}
+							>{`${product.processingMethod} ${product.plantName} ${product.plantOrgan}`}</p>
 						</b>
 						<span className={'text-[18px]'}>
 							<table className={'w-full'}>

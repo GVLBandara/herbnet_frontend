@@ -69,6 +69,8 @@ export function ListProduct() {
 			alert('Insert plant name and harvest date');
 		}
 		console.log('Form submitted:', formData);
+		alert('Product listed successfully');
+		navigate('/myproducts');
 	};
 
 	const handleUpdate = async (event) => {
@@ -85,7 +87,8 @@ export function ListProduct() {
 			alert('Insert plant name and harvest date');
 		}
 		console.log('Product Updated:', formData);
-		// navigate('/myproducts');
+		alert('Product updated successfully');
+		navigate('/myproducts');
 	};
 
 	return (

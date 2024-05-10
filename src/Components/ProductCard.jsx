@@ -8,7 +8,7 @@ export function ProductCard({ data }) {
 		return Math.floor(Math.random() * (max - min) + min);
 	}
 
-	const plantName = 'Balloon vine';
+	// const plantName = 'Balloon vine';
 
 	const click = () => {
 		navigate(`/view/${data.productId}`);
@@ -23,9 +23,9 @@ export function ProductCard({ data }) {
 				className={`relative flex justify-end rounded-[10px] p-2`}
 				style={{
 					height: '19vw',
-					backgroundImage: `url('/ProductImages/${plantName}${getRandomInt(
+					backgroundImage: `url('/ProductImages/${data.plantName}${getRandomInt(
 						0,
-						2
+						3
 					)}.jpg')`,
 					backgroundSize: 'cover',
 					backgroundPosition: 'center',

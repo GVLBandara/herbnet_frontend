@@ -67,7 +67,6 @@ export function MyProducts() {
 	console.log(prodList);
 
 	const Card = ({ data }) => {
-		data.plantName = 'Balloon vine';
 		return (
 			<div
 				className={`bg-gray-50 rounded-[10px] w-full h-fit shadow-[0px_0px_10px_4px_rgba(0,0,0,0.3)]`}
@@ -81,7 +80,7 @@ export function MyProducts() {
 						height: '15vw',
 						backgroundImage: `url('/ProductImages/${
 							data.plantName
-						}${getRandomInt(0, 2)}.jpg')`,
+						}${getRandomInt(0, 3)}.jpg')`,
 						backgroundSize: 'cover',
 						backgroundPosition: 'center',
 						backgroundRepeat: 'no-repeat',

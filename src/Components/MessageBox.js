@@ -4,7 +4,6 @@ import { API } from '../API/API';
 import { IoClose } from 'react-icons/io5';
 import { IoIosSend } from 'react-icons/io';
 import { FaCheckDouble } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
 
 const MessageBox = ({ close }) => {
 	const auth = useAuth();

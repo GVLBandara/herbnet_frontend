@@ -275,7 +275,7 @@ export function SearchResult() {
 								{capitalizeWords(searchKey.key)}
 							</span>
 						</p>
-						<p className={`text-3xl`}>154 Results</p>
+						<p className={`text-3xl`}>{prodList.length} Results</p>
 					</div>
 					<div>
 						<div

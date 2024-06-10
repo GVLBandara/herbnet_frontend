@@ -14,8 +14,8 @@ export function SearchResult() {
 
 	const searchKey = {
 		key: params.key,
-		part: params.part,
-		state: params.state,
+		organ: params.part,
+		method: params.state,
 	};
 
 	const search = async (e) => {

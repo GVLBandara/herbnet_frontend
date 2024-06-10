@@ -38,7 +38,7 @@ export function ViewProduct() {
 	});
 	const [msgBoxVisible, setMsgBoxVisible] = useState(false);
 	const [newMessage, setNewMessage] = useState('');
-	const [imgNum, setImgNum] = useState('');
+	const [imgNum, setImgNum] = useState(0);
 
 	const getProduct = async () => {
 		try {

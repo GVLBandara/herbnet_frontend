@@ -48,6 +48,7 @@ function updateProfile(user, profile) {
 function search(key) {
 	const url = `/product/search`;
 	return instance.get(url, {
+		params: key,
 		headers: { 'Content-type': 'application/json' },
 	});
 }

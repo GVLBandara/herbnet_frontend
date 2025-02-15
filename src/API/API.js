@@ -114,9 +114,10 @@ function sendMessage(user, message) {
 }
 
 const instance = axios.create({
-	baseURL: 'http://localhost:8080',
+	baseURL: '/herbnet',
 });
 
 function basicAuth(user) {
 	return `Basic ${user.authData}`;
 }
+

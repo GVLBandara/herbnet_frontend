@@ -117,7 +117,7 @@ export function ViewProduct() {
 												<b>ScientificName</b>
 											</p>
 										</td>
-										<td>
+										<td>getProduct
 											<p>: {product.species.scientificName}</p>
 										</td>
 									</tr>
